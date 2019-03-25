@@ -56,15 +56,21 @@ class Vec3d:
         
     # length calculation in homegenous coordinate or ??
     def length(self):
-        if(self.__vector[-1] == 0):
-            return math.sqrt(self.lengthSquare())
+        return math.sqrt(self.lengthSquare())
 
     def lengthSquare(self):
-        if(self.__vector[-1] == 0):
-            sum = 0
-            for i in range(4):
-                sum += self.__vector[i] ** 2
-            return sum
+        sum = 0
+        for i in range(3):
+            sum += self.__vector[i] ** 2
+        return sum
+    
+    def normalize(self):
+        if(self.length() == 0):
+            self.scalarMultiplication(0)
+        else:
+            self.scalarMultiplication(1 / self.length())
+        return self
+
     def getX(self):
         return self.__vector[0]
 

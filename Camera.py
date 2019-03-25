@@ -31,17 +31,22 @@ class Camera:
     def loadCamera(self):
         # I assume everything ok until at this point
         # Reverse of the actual direction where the camera look at.
-        cameraDirectionVector = self.__cameraPosition.clone().substractVec3d(self.__targetPosition)
-        rightAxis = self.__worldUpVector.crossProductVec3d(cameraDirectionVector)
-        cameraUp = cameraDirectionVector.crossProductVec3d(rightAxis)
+        cameraDirectionVector = self.__cameraPosition.clone().substractVec3d(self.__targetPosition).normalize()
+        print(cameraDirectionVector)
+        rightAxisVector = self.__worldUpVector.crossProductVec3d(cameraDirectionVector)
+        cameraUp = cameraDirectionVector.crossProductVec3d(rightAxisVector)
       
         translation = Mat3d().defineTranslationMatrix(  -self.__cameraPosition.getX(), 
                                                         -self.__cameraPosition.getY(), 
                                                         -self.__cameraPosition.getZ())
     
         self.__lookAtMatrix = Mat3d()
-        self.__lookAtMatrix.defineMatrix(rightAxis, cameraUp, cameraDirectionVector, Vec3d(0,0,0,1)).multiplyByMat3d(translation)
+        self.__lookAtMatrix.defineMatrix(rightAxisVector, cameraUp, cameraDirectionVector, Vec3d(0,0,0,1))
+        print("---------------------------")
         print(self.__lookAtMatrix)
+        self.__lookAtMatrix.multiplyByMat3d(translation)
+    #    self.__lookAtMatrix.defineMatrix(rightAxisVector, cameraUp, cameraDirectionVector, Vec3d(0,0,0,1)).multiplyByMat3d(translation)
+       # print(self.__lookAtMatrix)
 
     def lookAt(self, shape):
         a = shape.clone()

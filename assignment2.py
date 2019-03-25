@@ -75,21 +75,21 @@ def DrawGLScene():
 	
 
 	# Draw Triangle	
-	# trianglePos = triangle.getShape()
+	trianglePos = triangle.getShape()
 
-	# glBegin(GL_POLYGON)
-	# glColor3f(1.0, 0.0, 0.0)            # Red
-	# glVertex3f(trianglePos[0].getX(), trianglePos[0].getY(), trianglePos[0].getZ())   # Top
+	glBegin(GL_POLYGON)
+	glColor3f(1.0, 0.0, 0.0)            # Red
+	glVertex3f(trianglePos[0].getX(), trianglePos[0].getY(), trianglePos[0].getZ())   # Top
 
-	# glColor3f(0.0, 1.0, 0.0)			# Green
-	# glVertex3f(trianglePos[1].getX(), trianglePos[1].getY(), trianglePos[1].getZ())   # Bottom Right
+	glColor3f(0.0, 1.0, 0.0)			# Green
+	glVertex3f(trianglePos[1].getX(), trianglePos[1].getY(), trianglePos[1].getZ())   # Bottom Right
 
-	# glColor3f(0.0, 0.0, 1.0)            # Blue
-	# glVertex3f(trianglePos[2].getX(), trianglePos[2].getY(), trianglePos[2].getZ())   # Bottom Left
-	# glEnd()
+	glColor3f(0.0, 0.0, 1.0)            # Blue
+	glVertex3f(trianglePos[2].getX(), trianglePos[2].getY(), trianglePos[2].getZ())   # Bottom Left
+	glEnd()
 	
-	time.sleep(0.05)
-	# triangle.transformShape(b)
+	#time.sleep(0.05)
+	triangle.transformShape(b)
 	# End Draw Triangle
 
 	# Move Right 3.0 units.
@@ -186,18 +186,19 @@ def specialKey(*args):
 		print("DOWN")
 		degree -=  5
 	elif(args[0] == GLUT_KEY_RIGHT):
-		z += 0.1
+		z += 0.5
 	elif(args[0] == GLUT_KEY_LEFT):
-		z -= 0.1
+		z -= 0.5
 	elif(args[0] == GLUT_KEY_F1):
 		print("F1")
 
-	radian = degree * (math.pi / 180)
-	y = 1 * math.cos(radian)
-	z = 1 * math.sin(radian)
+	# radian = degree * (math.pi / 180)
+	# y = 1 * math.cos(radian)
+	# z = 1 * math.sin(radian)
 
 	camera.setCameraPosition(x,y,z)
-	camera.setWorldUpVector(0,-math.sin(radian),math.cos(radian))
+	camera.setWorldUpVector(0,1,z - 1)
+	# camera.setWorldUpVector(0,-math.sin(radian),math.cos(radian))
 	camera.loadCamera()
 	square = camera.lookAt(s)
 	triangle = camera.lookAt(t)
