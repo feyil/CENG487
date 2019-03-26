@@ -71,7 +71,7 @@ def DrawGLScene():
 
 	
 	# Move Left 1.5 units and into the screen 6.0 units.
-	glTranslatef(0, 0.0, -6.0)
+	# glTranslatef(0, 0.0, 0)
 	
 
 	# Draw Triangle	
@@ -273,7 +273,7 @@ radian = 0 * (math.pi / 180)
 
 x,y,z = 0, 0, 1
 
-camera.setCameraPosition(0, 0, 1)
+camera.setCameraPosition(0, 0, 5)
 camera.setTargetPosition(0,0,0)
 camera.setWorldUpVector(0,1,0)
 
