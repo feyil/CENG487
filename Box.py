@@ -15,7 +15,6 @@ class Box(Shape):
         # Distance is how far the quad from center
         # Calculate angle to rotate for a quad to match one edge
         hipotenous = math.sqrt((distance * distance) + 1)
-        print(hipotenous)
         half_angle_radian = math.acos(distance / hipotenous)
         angle = 2 * (half_angle_radian * 180 / math.pi)
         return angle
@@ -28,7 +27,6 @@ class Box(Shape):
         shape.addVertice(length,-length,0)
 
     def drawBox(self):
-        print("Draw Box")
         distance = 1
         angle = self.calculateScanAngle(distance)
         
@@ -41,6 +39,7 @@ class Box(Shape):
         scanShape = self.clone().transformShape(Mat3d().defineRotationMatrix(angle, "Y"))
         self.addVerticesOfShape(scanShape)
         
+        # Side by side quad rotated aroun Z
         scanShape.transformShape(Mat3d().defineRotationMatrix(angle, "Z"))
         self.addVerticesOfShape(scanShape)
 
@@ -54,10 +53,7 @@ class Box(Shape):
         
         self.resetShape()
         self.defineQuad(self, step / 2)
-        print(step)
-        print("asdkaslkdjklasj")
-        print(self)
-       
+      
         if(round != 0):
             self.transformShape(Mat3d().defineTranslationMatrix((step / 2.0) - (self.__quadLength / 2.0) , 0, 0))
 

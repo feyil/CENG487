@@ -11,8 +11,11 @@ import sys
 from Vec3d import Vec3d
 from Mat3d import Mat3d
 from Shape import Shape
+from Sphere import Sphere
+from Cylinder import Cylinder
 from Camera import Camera
 from Box import Box
+
 
 import time
 import math
@@ -168,7 +171,7 @@ def specialKey(*args):
 
 	camera.setCameraPosition(x,y,z)
 	# camera.setWorldUpVector(0,1,z - 1)
-	camera.setWorldUpVector(-math.sin(radian),math.cos(radian),0)
+	camera.setWorldUpVector(-math.sin(radian),0,math.cos(radian))
 	camera.loadCamera()
 	square = camera.lookAt(s)
 	triangle = camera.lookAt(t)
@@ -209,8 +212,8 @@ radian = 0 * (math.pi / 180)
 
 x,y,z = 0, 0, -1
 
-s = Box()
-s.subdivide(2)
+s = Cylinder()
+s.drawCylinder()
 
 
 camera.setCameraPosition(0, 0, z)
