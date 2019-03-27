@@ -49,6 +49,8 @@ class Box(Shape):
 
     def subdivide(self, round):
         # I will improve it later
+        # Idea of Cylinder draw can be applied here may be
+        # Clone probably slow down the process significantly
         step = self.__quadLength / float(2 ** round)
         
         self.resetShape()

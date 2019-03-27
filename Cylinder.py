@@ -9,57 +9,31 @@ class Cylinder(Shape):
     def __init__(self):
         Shape.__init__(self)
         self.__quadLength = 0.83 * 2
-        self.defineRectangle(self, self.__quadLength / 2.0)
-
-    # Exactly same with Box method I will refactor later
-    def calculateScanAngle(self, distance):
-        # Distance is how far the quad from center
-        # Calculate angle to rotate for a quad to match one edge
-        # 0.83 will be extracted to a variable later it done this way because it should be multiple of circle round I guess
-        hipotenous = math.sqrt((distance * distance) + (self.__quadLength / 2 * self.__quadLength / 2))
-        half_angle_radian = math.acos(distance / float(hipotenous))
-        angle = 2 * (half_angle_radian * 180 / math.pi)
-        return angle
-
-    def defineRectangle(self,shape, length):
-        # Start from right top and continue counter clockwise
-        shape.addVertice(length,length,0)
-        shape.addVertice(-length,length,0)
-        shape.addVertice(-length ,-length,0)
-        shape.addVertice(length,-length,0)
-
-    def drawCylinder(self):
-        distance = 2
-        angle = self.calculateScanAngle(distance)
-        rotateNum = 360.0 / angle
     
-        self.transformShape(Mat3d().defineTranslationMatrix(0,0,distance))
+    def drawCylinder(self, r = 1, length = 3, scanAngle = 5):
+        step = scanAngle
         
-        for i in range(int(rotateNum)):
-            tmp = self.clone()
-            tmp.transformShape(Mat3d().defineRotationMatrix(angle, "Y"))
-            self.addVerticesOfShape(tmp)
+        # (360 mod scanAngle) assumed 0
+        while(step <= 360):
+            # Rotating around y axis 
+            a,b = self.calculatePolarCoordinate(r, step)
+            step += scanAngle 
+            c,d = self.calculatePolarCoordinate(r, step)
 
-        self.transformShape(Mat3d().defineScalingMatrix(1,3,1))
+            self.addVertice(a,length / 2.0,b)
+            self.addVertice(c,length / 2.0,d)
+            self.addVertice(c,-length / 2.0,d)
+            self.addVertice(a,-length / 2.0,b)
 
-    def subdivide(self, round):
-        # I will improve it later
-        step = self.__quadLength / float(2 ** round)
-        
-        self.resetShape()
-        self.defineRectangle(self, step / 2)
-      
-        if(round != 0):
-            self.transformShape(Mat3d().defineTranslationMatrix((step / 2.0) - (self.__quadLength / 2.0) , 0, 0))
-
-        tmp = self.clone()
-        for i in range(2 ** round - 1):
-            tmp.transformShape(Mat3d().defineTranslationMatrix(step, 0, 0))
-            self.addVerticesOfShape(tmp)
-        
-        self.drawCylinder()
-        
-
+    def calculateRadian(self, degree):
+        return degree * (math.pi / 180)   
+    
+    def calculatePolarCoordinate(self, r, degree):
+        radian = self.calculateRadian(degree)
+        a = r * math.cos(radian)
+        b = r * math.sin(radian)
+        return a, b
+    
     def addVerticesOfShape(self, shape):
         for i in shape.getShape():
             self.addVertice(i.getX(), i.getY(), i.getZ())
