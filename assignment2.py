@@ -12,6 +12,7 @@ from Vec3d import Vec3d
 from Mat3d import Mat3d
 from Shape import Shape
 from Camera import Camera
+from Box import Box
 
 import time
 import math
@@ -24,6 +25,7 @@ camera = 0
 triangle = 0
 square = 0
 degree = 0
+angle = 0
 
 # for keystrokes
 square = 0
@@ -68,35 +70,24 @@ def DrawGLScene():
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 	glLoadIdentity()					# Reset The View 
 	
-
-	
-	# Move Left 1.5 units and into the screen 6.0 units.
-	# glTranslatef(0, 0.0, 0)
-	
-
-	# Draw Triangle	
-	trianglePos = triangle.getShape()
-
-	glBegin(GL_POLYGON)
-	glColor3f(1.0, 0.0, 0.0)            # Red
-	glVertex3f(trianglePos[0].getX(), trianglePos[0].getY(), trianglePos[0].getZ())   # Top
-
-	glColor3f(0.0, 1.0, 0.0)			# Green
-	glVertex3f(trianglePos[1].getX(), trianglePos[1].getY(), trianglePos[1].getZ())   # Bottom Right
-
-	glColor3f(0.0, 0.0, 1.0)            # Blue
-	glVertex3f(trianglePos[2].getX(), trianglePos[2].getY(), trianglePos[2].getZ())   # Bottom Left
-	glEnd()
-	
-	#time.sleep(0.05)
-	triangle.transformShape(b)
-	# End Draw Triangle
-
-	# Move Right 3.0 units.
-#	glTranslatef(3.0, 0.0, 0.0) #
-
+	glTranslate(0,0,-6)
 	# Draw a square start
 	          # Bluish shade
+
+	global angle
+	drawQuad(square)                          # We are done with the polygon
+	# drawQuad(triangle)
+	# square.transformShape(b)
+
+
+	#  since this is double buffered, swap the buffers to display what just got drawn. 
+	glutSwapBuffers()
+
+# The function called whenever a key is pressed. Note the use of Python tuples to pass in: (key, x, y)  
+def keyPressed(*args):
+	print(args)
+
+def drawQuad(square):
 	glBegin(GL_QUADS)
 	color = 0
 	for i in square.getShape():
@@ -106,28 +97,7 @@ def DrawGLScene():
 		else:
 			glColor3f(0.2, 0.8, 0.3)
 		glVertex3f(i.getX(), i.getY(), i.getZ())
-	glEnd()                             # We are done with the polygon
-
-	# square.transformShape(b)
-	
-
-	# Draw a square end
-	# camera.setCameraPosition(math.sin(0.1), 0.5, math.cos(0.1))
-	# camera.setTargetPosition(0,0,0)
-	# camera.setWorldUpVector(0,1,0)
-
-	# camera.createCamera()
-	# camera.lookAt(square)
-	# camera.lookAt(triangle)
-
-	
-	#  since this is double buffered, swap the buffers to display what just got drawn. 
-	glutSwapBuffers()
-
-# The function called whenever a key is pressed. Note the use of Python tuples to pass in: (key, x, y)  
-def keyPressed(*args):
-	print(args)
-
+	glEnd()             
 
 def main():
 	global window
@@ -192,13 +162,13 @@ def specialKey(*args):
 	elif(args[0] == GLUT_KEY_F1):
 		print("F1")
 
-	# radian = degree * (math.pi / 180)
-	# y = 1 * math.cos(radian)
-	# z = 1 * math.sin(radian)
+	radian = degree * (math.pi / 180)
+	x = 1 * math.cos(radian)
+	y = 1 * math.sin(radian)
 
 	camera.setCameraPosition(x,y,z)
-	camera.setWorldUpVector(0,1,z - 1)
-	# camera.setWorldUpVector(0,-math.sin(radian),math.cos(radian))
+	# camera.setWorldUpVector(0,1,z - 1)
+	camera.setWorldUpVector(-math.sin(radian),math.cos(radian),0)
 	camera.loadCamera()
 	square = camera.lookAt(s)
 	triangle = camera.lookAt(t)
@@ -209,71 +179,41 @@ def specialKey(*args):
 # Print message to console, and kick off the main to get it rolling.
 print("Hit ESC key to quit.")
 
-# Transformation Matrix Start
-moveTriangleSpace = Mat3d()
-moveTriangleSpace.defineTranslationMatrix(0 ,-1, 0)
-b = Mat3d()
-b.defineRotationMatrix(1, "Z")
-# Transformation Matrix End
-
-
-# Triangle Start
-t = Shape()
-t.addVertice(0, 1, 0)
-t.addVertice(1, -1, 0)
-t.addVertice(-1, -1, 0)
-
-t.transformShape(moveTriangleSpace)
-# Triangle End
 
 # Square Start
 s = Shape()
 
-# glColor3f(0.0,1.0,0.0);			# Set The Color To Blue
-s.addVertice( 1.0, 1.0,-1.0);		# Top Right Of The Quad (Top)
-s.addVertice(-1.0, 1.0,-1.0);		# Top Left Of The Quad (Top)
-s.addVertice(-1.0, 1.0, 1.0);		# Bottom Left Of The Quad (Top)
-s.addVertice( 1.0, 1.0, 1.0);		# Bottom Right Of The Quad (Top)
+# Start from left top and continue counter clockwise
+s.addVertice(1,1,0)
+s.addVertice(-1,1,0)
+s.addVertice(-1,-1,0)
+s.addVertice(1,-1,0)
 
-	# glColor3f(1.0,0.5,0.0);			# Set The Color To Orange
-s.addVertice( 1.0,-1.0, 1.0);		# Top Right Of The Quad (Bottom)
-s.addVertice(-1.0,-1.0, 1.0);		# Top Left Of The Quad (Bottom)
-s.addVertice(-1.0,-1.0,-1.0);		# Bottom Left Of The Quad (Bottom)
-s.addVertice( 1.0,-1.0,-1.0);		# Bottom Right Of The Quad (Bottom)
 
-	# glColor3f(1.0,0.0,0.0);			# Set The Color To Red
-s.addVertice( 1.0, 1.0, 1.0);		# Top Right Of The Quad (Front)
-s.addVertice(-1.0, 1.0, 1.0);		# Top Left Of The Quad (Front)
-s.addVertice(-1.0,-1.0, 1.0);		# Bottom Left Of The Quad (Front)
-s.addVertice( 1.0,-1.0, 1.0);		# Bottom Right Of The Quad (Front)
+# Calculate angle to rotate for a quad to match one edge
+r = 1 # radius
+hipotenous = math.sqrt((r * r) + 1)
+print(hipotenous)
+half_angle_radian = math.acos(r / hipotenous)
+angle = 2 * (half_angle_radian * 180 / math.pi)
+# end angle calculation
 
-	# glColor3f(1.0,1.0,0.0);			# Set The Color To Yellow
-s.addVertice( 1.0,-1.0,-1.0);		# Bottom Left Of The Quad (Back)
-s.addVertice(-1.0,-1.0,-1.0);		# Bottom Right Of The Quad (Back)
-s.addVertice(-1.0, 1.0,-1.0);		# Top Right Of The Quad (Back)
-s.addVertice( 1.0, 1.0,-1.0);		# Top Left Of The Quad (Back)
+print(angle)
 
-	# glColor3f(0.0,0.0,1.0);			# Set The Color To Blue
-s.addVertice(-1.0, 1.0, 1.0);		# Top Right Of The Quad (Left)
-s.addVertice(-1.0, 1.0,-1.0);		# Top Left Of The Quad (Left)
-s.addVertice(-1.0,-1.0,-1.0);		# Bottom Left Of The Quad (Left)
-s.addVertice(-1.0,-1.0, 1.0);		# Bottom Right Of The Quad (Left)
-
-	# glColor3f(1.0,0.0,1.0);			# Set The Color To Violet
-s.addVertice( 1.0, 1.0,-1.0);		# Top Right Of The Quad (Right)
-s.addVertice( 1.0, 1.0, 1.0);		# Top Left Of The Quad (Right)
-s.addVertice( 1.0,-1.0, 1.0);		# Bottom Left Of The Quad (Right)
-s.addVertice( 1.0,-1.0,-1.0);		# Bottom Right Of The Quad (Right)
-	# glEnd();				# Done Drawing The Quad
-
+s.transformShape(Mat3d().defineTranslationMatrix(0,0,r))
+t = s.clone().transformShape(Mat3d().defineRotationMatrix(angle, "X"))
 
 camera = Camera()
 
 radian = 0 * (math.pi / 180)
 
-x,y,z = 0, 0, 1
+x,y,z = 0, 0, -1
 
-camera.setCameraPosition(0, 0, 5)
+s = Box()
+s.subdivide(2)
+
+
+camera.setCameraPosition(0, 0, z)
 camera.setTargetPosition(0,0,0)
 camera.setWorldUpVector(0,1,0)
 
@@ -281,5 +221,6 @@ camera.loadCamera()
 square = camera.lookAt(s)
 triangle =camera.lookAt(t)
 
+print(t)
 main()
     	

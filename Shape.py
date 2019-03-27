@@ -30,6 +30,10 @@ class Shape():
     def getShape(self):
         return self.__verticesList
 
+    def resetShape(self):
+        self.__verticesList = []
+        self.__size = 0
+
     def clone(self):
         return copy.deepcopy(self)
 
