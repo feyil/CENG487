@@ -212,8 +212,8 @@ radian = 0 * (math.pi / 180)
 
 x,y,z = 0, 0, -1
 
-s = Sphere()
-s.drawSphere(3)
+s = Cylinder()
+s.drawCylinder()
 
 
 camera.setCameraPosition(0, 0, z)
