@@ -1,4 +1,4 @@
-# CENG 487 Assignment1 by
+# CENG 487 Assignment2 by
 # Furkan Emre Yilmaz
 # StudentId: 230201057
 # March 2019

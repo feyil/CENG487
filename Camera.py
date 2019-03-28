@@ -1,3 +1,7 @@
+# CENG 487 Assignment2 by
+# Furkan Emre Yilmaz
+# StudentId: 230201057
+# March 2019
 
 from Mat3d import Mat3d
 from Vec3d import Vec3d
@@ -18,7 +22,7 @@ class Camera:
         self.__targetPosition = []
 
     def setCameraPosition(self, x, y, z):
-        self.__cameraPosition = Vec3d(x,y,z,1)
+        self.__cameraPosition = Vec3d(x,y,z,0)
         return self        
 
     def setWorldUpVector(self, x, y, z):
@@ -32,7 +36,7 @@ class Camera:
         # I assume everything ok until at this point
         # Reverse of the actual direction where the camera look at.
         cameraDirectionVector = self.__cameraPosition.clone().substractVec3d(self.__targetPosition).normalize()
-        print(cameraDirectionVector)
+    
         rightAxisVector = self.__worldUpVector.crossProductVec3d(cameraDirectionVector)
         cameraUp = cameraDirectionVector.crossProductVec3d(rightAxisVector)
       
@@ -42,11 +46,9 @@ class Camera:
     
         self.__lookAtMatrix = Mat3d()
         self.__lookAtMatrix.defineMatrix(rightAxisVector, cameraUp, cameraDirectionVector, Vec3d(0,0,0,1))
-        print("---------------------------")
-        print(self.__lookAtMatrix)
+   
         self.__lookAtMatrix.multiplyByMat3d(translation)
-    #    self.__lookAtMatrix.defineMatrix(rightAxisVector, cameraUp, cameraDirectionVector, Vec3d(0,0,0,1)).multiplyByMat3d(translation)
-       # print(self.__lookAtMatrix)
+
 
     def lookAt(self, shape):
         a = shape.clone()
@@ -58,4 +60,4 @@ class Camera:
 
 
 if __name__ == "__main__":
-    print("Hello from Space Universe whatsoever")
+    print("Hello")

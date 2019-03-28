@@ -1,3 +1,7 @@
+# CENG 487 Assignment2 by
+# Furkan Emre Yilmaz
+# StudentId: 230201057
+# March 2019
 
 from Primitives3D import Primitive3D
 
@@ -60,6 +64,4 @@ class Box(Primitive3D):
 
 
 if __name__ == "__main__":
-    a = Box()
-    a.drawBox(0)
-    print(a)
+    print("Hello")

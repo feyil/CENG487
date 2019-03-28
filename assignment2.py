@@ -1,7 +1,11 @@
-# CENG 487 Assignment1 by
+# CENG 487 Assignment2 by
 # Furkan Emre Yilmaz
 # StudentId: 230201057
 # March 2019
+
+# I tested camera with keystrokes I think it work as expected
+# Primitives also tested for subdivision I used scanAngle adjusting angle, subidivison can be changed
+# Only mouse left and right button for weird movements
 
 from OpenGL.GL import *
 from OpenGL.GLUT import *
@@ -16,25 +20,21 @@ from Cylinder import Cylinder
 from Camera import Camera
 from Box import Box
 
-
-import time
 import math
-import random
 
-x = 0
-y = 0
-z = 1
-camera = 0
-triangle = 0
-square = 0
-degree = 0
-angle = 0
+mouseButton = 0 # "left" for left "right" for right
+mainCamera = 0
+mouseLastX, mouseLastY = 0,0
+flag = 0
+camX, camY, camZ = 0, 0, -6
+camObject = 0
+shape = 0
+rotation = 0
 
-# for keystrokes
-square = 0
-triangle = 0
+divide = 30
+
 ESCAPE = '\033'
-rot = 0.0
+
 # Number of the glut window.
 window = 0
 
@@ -50,12 +50,10 @@ def InitGL(Width, Height):				# We call this right after our OpenGL window is cr
 	
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()					# Reset The Projection Matrix
-	# 									# Calculate The Aspect Ratio Of The Window
-    # gluPerspective(60, float(Width)/float(Height), 0.1, 100.0)
 
     glMatrixMode(GL_MODELVIEW)
 
-# The function called when our window is resized (which shouldn't happen if you enable fullscreen, below)
+
 def ReSizeGLScene(Width, Height):
     if Height == 0:						# Prevent A Divide By Zero If The Window Is Too Small 
 	    Height = 1
@@ -71,36 +69,18 @@ def ReSizeGLScene(Width, Height):
 def DrawGLScene():
 	# Clear The Screen And The Depth Buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-	glLoadIdentity()					# Reset The View 
+	glLoadIdentity()
+	# End					
 	
 	glTranslate(0,0,-6)
-	# Draw a square start
-	          # Bluish shade
 
-	global angle
-	drawQuad(square)                          # We are done with the polygon
-	# drawQuad(triangle)
-	# square.transformShape(b)
+	# draw
+	drawQuads(camObject)
 
-
-	#  since this is double buffered, swap the buffers to display what just got drawn. 
+	# end
+	
+	
 	glutSwapBuffers()
-
-# The function called whenever a key is pressed. Note the use of Python tuples to pass in: (key, x, y)  
-def keyPressed(*args):
-	print(args)
-
-def drawQuad(square):
-	glBegin(GL_QUADS)
-	color = 0
-	for i in square.getShape():
-		color += 1
-		if(color % 2 == 0):
-			glColor3f(0.8, 0.3, 0.8)
-		else:
-			glColor3f(0.2, 0.8, 0.3)
-		glVertex3f(i.getX(), i.getY(), i.getZ())
-	glEnd()             
 
 def main():
 	global window
@@ -141,89 +121,153 @@ def main():
 	glutReshapeFunc(ReSizeGLScene)
 	
 	# Register the function called when the keyboard is pressed.  
-	glutKeyboardFunc(keyPressed)
+	#glutKeyboardFunc(keyPressed)
 
 	# Initialize our window. 
 	InitGL(640, 480)
-	glutSpecialFunc(specialKey)
+	
+	glutMouseFunc(mouseButtonClicked)
+	glutMotionFunc(readMouse)
+	glutKeyboardFunc(key)
+	
+	
 	# Start Event Processing Engine	
 	glutMainLoop()
 	
-def specialKey(*args):
-	print("PUSH")
-	global x,y,z,triangle, square, degree
-	if(args[0] == GLUT_KEY_UP):
-		print("UP")
-		degree += 5
-	elif(args[0] == GLUT_KEY_DOWN):
-		print("DOWN")
-		degree -=  5
-	elif(args[0] == GLUT_KEY_RIGHT):
-		z += 0.5
-	elif(args[0] == GLUT_KEY_LEFT):
-		z -= 0.5
-	elif(args[0] == GLUT_KEY_F1):
-		print("F1")
+def drawQuads(shape):
+	glBegin(GL_QUADS)
+	color = 0
+	for i in shape.getShape():
+		color += 1
+		if(color % 2 == 0):
+			glColor3f(0.8, 0.3, 0.8)
+		else:
+			glColor3f(0.2, 0.8, 0.3)
+		glVertex3f(i.getX(), i.getY(), i.getZ())
+	glEnd() 
 
-	radian = degree * (math.pi / 180)
-	x = 1 * math.cos(radian)
-	y = 1 * math.sin(radian)
-
-	camera.setCameraPosition(x,y,z)
-	# camera.setWorldUpVector(0,1,z - 1)
-	camera.setWorldUpVector(-math.sin(radian),math.cos(radian),0)
-	camera.loadCamera()
-	square = camera.lookAt(s)
-	triangle = camera.lookAt(t)
+def mouseButtonClicked(*args):
+	global mouseButton
+	if(args[0] == GLUT_LEFT_BUTTON): # left button clicked
+		mouseButton = "left"
+	elif(args[0] == GLUT_RIGHT_BUTTON): # right buton clicked
+		mouseButton = "right"
+def key(*args):
+	global divide, camObject
+	if(divide <= 0):
+		divide = 30 
+	if(args[0] == '+'):
+		divide -= 5
+		shape.resetShape().draw(2,divide)
+	elif(args[0] == '-'):
+		divide += 5
+		shape.resetShape().draw(2,divide)
+	camObject = mainCamera.lookAt(shape)
 	DrawGLScene()
 
 
+def readMouse(x, y):
+	# In my opinion code is really bad but things goes and goes
+	# I will consider all of them later. I can't decide which way I should walk.
+	global mouseLastX, mouseLastY,flag, mouseButton, rotation
+	global camObject, camX, camY, camZ
+	if(flag % 2 == 0):
+		mouseLastX = x
+		mouseLastY = y
+		flag = 	1
+	else:
+		flag = 0
+
+	if(mouseButton == "left"):
+		rotation += 5
+		radian = rotation * (math.pi / 180)
+		if(mouseLastX > x):
+			x = 1 * math.cos(radian)
+			y = 1 * math.sin(radian)
+
+			camX = x
+			camY = y
+
+			mainCamera.setCameraPosition(camX, camY, camZ)
+			# derivative of position vector
+			mainCamera.setWorldUpVector(-math.sin(radian), math.cos(radian), 0)
+			mainCamera.loadCamera()
+			camObject = mainCamera.lookAt(shape)
+
+		elif(mouseLastX < x):
+			y = 1 * math.cos(radian)
+			x = 1 * math.sin(radian)
+
+			camX = x
+			camY = y
+
+			mainCamera.setCameraPosition(camX, camY, camZ)
+			# derivative of position vector
+			mainCamera.setWorldUpVector(math.cos(radian), -math.sin(radian), 0)
+			mainCamera.loadCamera()
+			camObject = mainCamera.lookAt(shape)
+
+		elif(mouseLastY > y):
+			z = 6 * math.cos(radian)
+			x = 6 * math.sin(radian)
+
+			camX = x
+			camZ = z
+
+			mainCamera.setCameraPosition(camX, camY, camZ)
+			# derivative of position vector
+			mainCamera.setWorldUpVector(math.cos(radian),0 ,-math.sin(radian))
+			mainCamera.loadCamera()
+			camObject = mainCamera.lookAt(shape)
+
+		elif(mouseLastY < y):
+			x = 6 * math.cos(radian)
+			z = 6 * math.sin(radian)
+
+			camX = x
+			camZ = z
+
+			mainCamera.setCameraPosition(camX, camY, camZ)
+			# derivative of position vector
+			mainCamera.setWorldUpVector(-math.sin(radian),0 ,math.cos(radian))
+			mainCamera.loadCamera()
+			camObject = mainCamera.lookAt(shape)
+		
+	elif(mouseButton == "right"):
+		if(mouseLastY > y):
+			if(camZ < 0):
+				camZ -= 0.5
+			else:
+				camZ += 0.5
+		elif(mouseLastY < y):
+			if(camZ < 0):
+				camZ += 0.5
+			else:
+				camZ -= 0.5
+		mainCamera.setCameraPosition(camX, camY, camZ)
+		mainCamera.loadCamera()
+		camObject = mainCamera.lookAt(shape)
 	
-# Print message to console, and kick off the main to get it rolling.
+
+	
+
+# Initialization code
+mainCamera = Camera()
+
+mainCamera.setCameraPosition(camX, camY, camZ)
+mainCamera.setTargetPosition(0,0,0)
+mainCamera.setWorldUpVector(0,1,0)
+
+mainCamera.loadCamera()
+
+shape = Sphere()
+shape.draw()
+camObject = mainCamera.lookAt(shape)
+
+# End
+
+
+# Start the window loop
 print("Hit ESC key to quit.")
-
-
-# Square Start
-s = Shape()
-
-# Start from left top and continue counter clockwise
-s.addVertice(1,1,0)
-s.addVertice(-1,1,0)
-s.addVertice(-1,-1,0)
-s.addVertice(1,-1,0)
-
-
-# Calculate angle to rotate for a quad to match one edge
-r = 1 # radius
-hipotenous = math.sqrt((r * r) + 1)
-print(hipotenous)
-half_angle_radian = math.acos(r / hipotenous)
-angle = 2 * (half_angle_radian * 180 / math.pi)
-# end angle calculation
-
-print(angle)
-
-s.transformShape(Mat3d().defineTranslationMatrix(0,0,r))
-t = s.clone().transformShape(Mat3d().defineRotationMatrix(angle, "X"))
-
-camera = Camera()
-
-radian = 0 * (math.pi / 180)
-
-x,y,z = 0, 0, -1
-
-s = Cylinder()
-s.draw()
-
-
-camera.setCameraPosition(0, 0, z)
-camera.setTargetPosition(0,0,0)
-camera.setWorldUpVector(0,1,0)
-
-camera.loadCamera()
-square = camera.lookAt(s)
-triangle =camera.lookAt(t)
-
-#print(s)
 main()
     	
