@@ -42,10 +42,6 @@ class Primitive3D(Shape):
         shape.addVertice(-length,-length,0)
         shape.addVertice(length,-length,0)
 
-    def addVerticesOfShape(self, shape):
-        for i in shape.getShape():
-            self.addVertice(i.getX(), i.getY(), i.getZ())
-
     def __str__(self):
         return Shape.__str__(self)
     

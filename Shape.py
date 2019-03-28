@@ -23,10 +23,12 @@ class Shape():
     def transformShape(self, aMath3d):
         for i in range(self.__size):
             self.__verticesList[i] = aMath3d.multiplyByVec3d(self.__verticesList[i])
-       # self.__matrix_stack.append(aMath3d.clone()) 
-       # Above line is too costly for realtime drawing?
         return self
     
+    def addVerticesOfShape(self, shape):
+        for i in shape.getShape():
+            self.addVertice(i.getX(), i.getY(), i.getZ())
+
     def getShape(self):
         return self.__verticesList
 

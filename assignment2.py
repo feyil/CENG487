@@ -213,7 +213,7 @@ radian = 0 * (math.pi / 180)
 x,y,z = 0, 0, -1
 
 s = Cylinder()
-s.drawCylinder()
+s.draw()
 
 
 camera.setCameraPosition(0, 0, z)

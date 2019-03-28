@@ -5,9 +5,8 @@ class Cylinder(Primitive3D):
 
     def __init__(self):
         Primitive3D.__init__(self)
-        self.__quadLength = 0.83 * 2
     
-    def drawCylinder(self, r = 1, length = 3, scanAngle = 5):
+    def draw(self, r = 1, length = 3, scanAngle = 30):
         step = scanAngle
         
         # (360 mod scanAngle) assumed 0
