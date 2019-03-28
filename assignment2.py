@@ -224,6 +224,6 @@ camera.loadCamera()
 square = camera.lookAt(s)
 triangle =camera.lookAt(t)
 
-print(t)
+#print(s)
 main()
     	
