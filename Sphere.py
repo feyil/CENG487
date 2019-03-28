@@ -8,26 +8,52 @@ class Sphere(Shape):
 
     def __init__(self):
         Shape.__init__(self)
-        self.defineRectangle(self, 1)
 
-    # Exactly same with Box method I will refactor later
-    def calculateScanAngle(self, distance):
-        # Distance is how far the quad from center
-        # Calculate angle to rotate for a quad to match one edge
-        hipotenous = math.sqrt((distance * distance) + 1)
-        half_angle_radian = math.acos(distance / hipotenous)
-        angle = 2 * (half_angle_radian * 180 / math.pi)
-        return angle
+    def drawSphere(self, radius = 2, scanAngle = 30):
+        alpha = theta = scanAngle
+        alphaStep = thetaStep = 0
 
-    def defineRectangle(self,shape, length):
-        # Start from right top and continue counter clockwise
-        shape.addVertice(length,length * 1.8,0)
-        shape.addVertice(-length,length * 1.8,0)
-        shape.addVertice(-length ,-length * 1.8,0)
-        shape.addVertice(length,-length * 1.8,0)
+        while(alphaStep <= 180):
+            while(thetaStep <= 360):
+                print("a")
+                x1, y1, z1 = self.calculateSphericalCoordinates(radius, alphaStep, thetaStep)
+            
+                thetaStep += theta    
+                x2, y2, z2 = self.calculateSphericalCoordinates(radius, alphaStep, thetaStep)
+            
+                alphaStep += alpha
+                x3, y3, z3 = self.calculateSphericalCoordinates(radius, alphaStep, thetaStep)
+
+                x4, y4, z4 = self.calculateSphericalCoordinates(radius, alphaStep, thetaStep - theta)
+                
+                alphaStep -= alpha
+
+                self.addVertice(x1, y1, z1)
+                self.addVertice(x2, y2, z2)
+                self.addVertice(x3, y3, z3)
+                self.addVertice(x4, y4, z4)
+            thetaStep = 0
+            alphaStep += alpha
+
+    def calculateRadian(self, degree):
+        return degree * (math.pi / 180)   
+    
+    def calculateSphericalCoordinates(self, r, alpha, theta):
+        alpha_radian = self.calculateRadian(alpha)
+        theta_radian = self.calculateRadian(theta)
+
+        x = r * math.sin(alpha_radian) * math.cos(theta_radian)
+        y = r * math.sin(alpha_radian) * math.sin(theta_radian)
+        z = r * math.cos(alpha_radian)
+        return x, y, z
+    
+    def addVerticesOfShape(self, shape):
+        for i in shape.getShape():
+            self.addVertice(i.getX(), i.getY(), i.getZ())
 
     def __str__(self):
         return Shape.__str__(self)
-        
-    
-print("Hello")
+
+
+if __name__ == "__main__":
+    a = Sphere()

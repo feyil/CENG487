@@ -171,7 +171,7 @@ def specialKey(*args):
 
 	camera.setCameraPosition(x,y,z)
 	# camera.setWorldUpVector(0,1,z - 1)
-	camera.setWorldUpVector(-math.sin(radian),0,math.cos(radian))
+	camera.setWorldUpVector(-math.sin(radian),math.cos(radian),0)
 	camera.loadCamera()
 	square = camera.lookAt(s)
 	triangle = camera.lookAt(t)
@@ -212,8 +212,8 @@ radian = 0 * (math.pi / 180)
 
 x,y,z = 0, 0, -1
 
-s = Cylinder()
-s.drawCylinder()
+s = Sphere()
+s.drawSphere(3)
 
 
 camera.setCameraPosition(0, 0, z)
