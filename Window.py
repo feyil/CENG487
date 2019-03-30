@@ -33,7 +33,6 @@ class WindowGL:
         # Configureable via inheritance
         pass
        
-
     # Use above functions to draw   
     # Below embeded configuration setup goes. 
     

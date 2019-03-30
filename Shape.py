@@ -68,7 +68,7 @@ class Shape():
         self.__drawAs = drawAs
 
     def drawGL(self):
-        glTranslate(0,0,-6)
+        #glTranslate(0,0,-6)
         glBegin(self.__drawAs)
         color = 0
         for i in self.getShape():

@@ -6,6 +6,7 @@
 from OpenGL.GL import *
 
 from Window import WindowGL
+from Camera import *
 
 
 from Shape import Shape
@@ -17,14 +18,35 @@ from Mat3d import Mat3d
 
 import math
 
-box = Box()
+
+
+# --------------------- TESTED --------------------- #
+# box = Box()
+# box.drawAs(GL_QUADS)
+# box.draw()
+# camera = Camera()
+# camera.setCameraFront(0,0,-1)
+# camera.setCameraPosition(0,0,6)
+# camera.setWorldUp(0,1,0)
+# camera.updateCamera()
+
+# camera.linearMove(CamMovement.BACKWARD, 4)
+# camera.linearMove(CamMovement.RIGHT, 2)
+
+# camera.rotateMove(5,10, sensitivity = 1)
+# camera.linearMove(CamMovement.RIGHT, 1)
+# camera.view(box)
+# --------------------- TESTED  END--------------------- #
+
+box = Sphere()
 box.drawAs(GL_QUADS)
-
-box.addTransformation(Mat3d().defineRotationMatrix(30, "Z"))
-box.addTransformation(Mat3d().defineTranslationMatrix(0, 1, 0))
-
 box.draw()
-box.transformShape()
+camera = Camera()
+camera.setCameraFront(0,0,-1)
+camera.setCameraPosition(0,0,6)
+camera.setWorldUp(0,1,0)
+camera.updateCamera()
+camera.view(box)
 
 def main():
 	mainWindow = WindowGL("App", 800, 600)
