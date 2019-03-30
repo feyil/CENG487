@@ -8,7 +8,7 @@ from OpenGL.GLUT import *
 from OpenGL.GLU import *
 import sys
 
-from Box import Box
+from Sphere import Sphere
 
 class WindowGL:
 
@@ -20,18 +20,23 @@ class WindowGL:
 
         self.__window = 0
         self.__scene = 0
+        
 
     def setScene(self, scene):
         self.__scene = scene
 
     def drawScene(self):
         # Configureable via inheritance
-        pass
+        self.__scene.drawGL()
 
     def registerEvents(self):
         # Configureable via inheritance
         pass
+       
 
+    # Use above functions to draw   
+    # Below embeded configuration setup goes. 
+    
     def run(self):
         self.__initializeWindow()
         self.__window = glutCreateWindow(self.__windowName)
