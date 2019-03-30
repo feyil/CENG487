@@ -47,6 +47,7 @@ camera.setCameraPosition(0,0,6)
 camera.setWorldUp(0,1,0)
 camera.updateCamera()
 camera.view(box)
+print(camera)
 
 def main():
 	mainWindow = WindowGL("App", 800, 600)

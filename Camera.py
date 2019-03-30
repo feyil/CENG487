@@ -128,7 +128,12 @@ class Camera:
         shape.transformShape(self.__lookAtMatrix)
     
     def __str__(self):
-        return "Hi buddy"
+        output = ""
+        output += "Camera Position:\n {0}\n".format(self.__cameraPosition)
+        output += "Camera Target:\n {0}\n".format(self.__cameraTarget)
+        output += "Yaw Angle: {0}\n".format(self.__yaw)
+        output += "Pitch Angle: {0}\n".format(self.__pitch)
+        return output
 
 
 if __name__ == "__main__":
