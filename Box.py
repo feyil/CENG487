@@ -60,6 +60,7 @@ class Box(Primitive3D):
         self.createBox()
 
     def __str__(self):
+        print(Primitive3D.__str__(self))
         return Primitive3D.__str__(self)
 
 

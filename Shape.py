@@ -33,6 +33,7 @@ class Shape():
         else:
             self.__finalTransformMatrix = aMath3d.multiplyByMat3d(self.__finalTransformMatrix)
         self.__matrix_stack.append(aMath3d)
+        return self
         
     def transformShape(self, aMath3d = 0):
         if(aMath3d == 0):
@@ -45,9 +46,16 @@ class Shape():
     def addVerticesOfShape(self, shape):
         for i in shape.getShape():
             self.addVertice(i.getX(), i.getY(), i.getZ())
+        return self
 
     def getShape(self):
         return self.__verticesList
+
+    def getFinalTransformationMatrix(self):
+        return self.__finalTransformMatrix
+
+    def setFinalTransformationMatrix(self, final):
+        self.__finalTransformMatrix = final
 
     def resetShape(self):
         self.__verticesList = []

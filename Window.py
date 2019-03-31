@@ -8,8 +8,6 @@ from OpenGL.GLUT import *
 from OpenGL.GLU import *
 import sys
 
-from Sphere import Sphere
-
 class WindowGL:
 
     def __init__(self, windowName, width, height):
@@ -24,6 +22,9 @@ class WindowGL:
 
     def setScene(self, scene):
         self.__scene = scene
+
+    def getScene(self):
+        return self.__scene
 
     def drawScene(self):
         # Configureable via inheritance

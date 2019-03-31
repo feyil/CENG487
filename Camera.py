@@ -4,6 +4,7 @@
 # March 2019
 
 import math
+import copy
 from enum import Enum
 
 
@@ -125,7 +126,7 @@ class Camera:
         self.updateCamera()
 
     def view(self, shape):
-        shape.transformShape(self.__lookAtMatrix)
+        return shape.clone().transformShape(self.__lookAtMatrix)
     
     def __str__(self):
         output = ""
@@ -135,6 +136,8 @@ class Camera:
         output += "Pitch Angle: {0}\n".format(self.__pitch)
         return output
 
+    def clone(self):
+        return copy.deepcopy(self)
 
 if __name__ == "__main__":
     a = Camera()
