@@ -73,7 +73,7 @@ class WindowGL:
     def __initializeGL(self):
 
         # RGBA Background Color
-        self.__setBackgroundColor(1, 1, 1, 0.0)
+        self.__setBackgroundColor(0, 0, 0, 0.0)
         # End
 
         # GL Configuration

@@ -5,7 +5,6 @@
 
 import math
 import copy
-from enum import Enum
 
 
 from Mat3d import Mat3d
@@ -14,7 +13,8 @@ from Shape import Shape
 
 # Inspired from learnopengl.com
 
-class CamMovement(Enum):
+# Used for enumeration purposes
+class CamMovement:
     FORWARD = 0
     BACKWARD = 1
     UP = 2

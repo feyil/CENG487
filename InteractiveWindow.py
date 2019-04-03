@@ -32,6 +32,8 @@ from Scene import *
 # 4 -> select box
 # 5 -> select sphere
 # 6 -> select cylinder
+# + -> increase subdivision for selected shape
+# - -> decrease subidivison for selected shape
 # Select a shape and move using
 #   Scene Space
 #       -> w -> up
@@ -80,20 +82,34 @@ class InteractiveWindow(WindowGL):
             if(self.__selected != '4'):
                 self.__selected = key
             
+            self.subdivideKey("box", args)
             self.shapeMovement("box", args)
         if(self.__selected == '5' or key == '5'):
             # Sphere selected
             if(self.__selected != '5'):
                 self.__selected = key
-           
+
+            self.subdivideKey("sphere", args)
             self.shapeMovement("sphere", args)
         if(self.__selected == '6' or key == '6'):
             # Cylinder selected
             if(self.__selected != '6'):
                 self.__selected = key
-         
+
+            self.subdivideKey("cylinder", args)
             self.shapeMovement("cylinder", args)
-        
+            
+
+            
+
+    def subdivideKey(self, shapeName, args):
+        key = args[0]
+
+        if(key == '+'):
+            self.getScene().subdivide(shapeName, key)
+        elif(key == '-'):
+            self.getScene().subdivide(shapeName, key)
+
     def shapeMovement(self, shapeName, args):
         # Shape movement implementation
         scene = self.getScene()
@@ -158,7 +174,7 @@ class InteractiveWindow(WindowGL):
     def camFreeMove(self, args):
         # Camera free move implementation
         
-        camera = self.getScene().getActiveCamere()
+        camera = self.getScene().getActiveCamera()
 
         key = args[0]
         speed = 1
@@ -190,6 +206,47 @@ class InteractiveWindow(WindowGL):
             camera.rotateMove(100,0)
         elif(key == 102): # rigth yaw
             camera.rotateMove(-100,0)
-        
+
+    def usage(self):
+        print("------------------------ KEY CONFIGURATION ------------------------\n" +
+                "1 -> switch mainCamera\n" +
+                "2 -> switch cam2\n" +
+                "3 -> selected camera free move\n" +
+                "     -> w -> in\n" +
+                "     -> s -> out\n" +
+                "     -> a -> right\n" +
+                "     -> d -> left\n" +
+                "     -> e -> up\n" +
+                "     -> r -> down\n" +
+                "     -> up -> pitch up\n" +
+                "     -> down -> pitch down\n" +
+                "     -> left -> yaw left\n" +
+                "     -> right -> yaw right\n" +
+                "4 -> select box\n" +
+                "5 -> select sphere\n" +
+                "6 -> select cylinder\n" +
+                "+ -> increase subdivision for selected shape\n" +
+                "- -> decrease subidivison for selected shape\n" +
+                "Select a shape and move using\n" +
+                " Scene Space\n" +
+                    "     -> w -> up\n" +
+                    "     -> s -> down\n" +
+                    "     -> a -> left\n" +
+                    "     -> d -> right\n" +
+                    "     -> e -> in\n" +
+                    "     -> r -> out\n" +
+                " Local Space\n" +
+                "     -> up\n" +
+                "     -> down\n" +
+                "     -> left\n" +
+                "     -> right\n" +
+                "Rotation of selected shape\n" +
+                " -> k -> scene space use x, y, z button to rotate\n" +
+                " -> l -> local space use x, y, z button to rotate\n" +
+                "-------------------------- END ---------------------------------------")
     def __str__(self):
         return WindowGL.__str__(self)
+
+if __name__ == "__main__":
+    a = InteractiveWindow("a", 800, 600)
+    a.usage()    

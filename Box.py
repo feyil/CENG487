@@ -38,6 +38,8 @@ class Box(Primitive3D):
         # Clone probably slow down the process significantly
         step = self.__quadLength / float(2 ** division)
         
+        self.subdivison = {"number" : division}
+
         self.resetShape()
         self.defineQuad(self, step / 2)
       

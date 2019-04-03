@@ -9,6 +9,8 @@ class Sphere(Primitive3D):
         alpha = theta = scanAngle
         alphaStep = thetaStep = 0
 
+        self.subdivison = {"angle" : scanAngle}
+
         while(alphaStep <= 180):
             while(thetaStep <= 360):
                 # Start defining top left continue clokcwise

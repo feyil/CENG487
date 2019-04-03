@@ -9,6 +9,8 @@ class Cylinder(Primitive3D):
     def draw(self, r = 1, length = 3, scanAngle = 30):
         step = scanAngle
         
+        self.subdivison = {"angle" : scanAngle}
+        
         # (360 mod scanAngle) assumed 0
         while(step <= 360):
             # Rotating around y axis 

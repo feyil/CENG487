@@ -9,6 +9,47 @@ class Primitive3D(Shape):
     def __init__(self):
         Shape.__init__(self)
 
+        # {"angle" : 10} {"number" : 1} for now
+        self.subdivison = {}
+
+    # value either '+' '-'
+    def subdivide(self, value):
+        self.resetShape()
+        
+        if("angle" in self.subdivison):
+            angle = self.subdivison.get("angle")
+
+            new_angle = 0
+
+            if(value == '+'):
+                new_angle = angle / 2.0
+            elif(value == '-'):
+                new_angle = angle * 2
+
+            self.draw(scanAngle = new_angle)
+
+            self.subdivison = {"angle" : new_angle}
+        elif("number" in self.subdivison):
+            number = self.subdivison.get("number")
+            
+            new_number = 0
+            if(number == 0):
+                number = 1
+
+            if(value == '+'):
+                new_number = number * 2
+            elif(value == '-'):
+                new_number = int(number / 2.0)
+
+            if(new_number == 8): # it have hard times if we exceed this number
+                new_number = 4
+            self.subdivison = {"number" : new_number}
+            self.draw(division = new_number)
+
+        
+    def draw(self, scanAngle = 0, division = 0):
+        pass
+
     def calculateRadian(self, degree):
         return degree * (math.pi / 180)  
 
@@ -41,6 +82,8 @@ class Primitive3D(Shape):
         shape.addVertice(-length,length,0)
         shape.addVertice(-length,-length,0)
         shape.addVertice(length,-length,0)
+    
+    
 
     def __str__(self):
         return Shape.__str__(self)

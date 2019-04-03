@@ -3,7 +3,6 @@
 # StudentId: 230201057
 # March 2019
 
-from enum import Enum
 from Box import Box
 from Sphere import Sphere
 from Mat3d import Mat3d
@@ -11,7 +10,7 @@ from Vec3d import Vec3d
 from Camera import Camera
 from Shape import Shape
 
-class Space(Enum):
+class Space:
     LOCAL = 0
     SCENE = 1
 
@@ -97,10 +96,15 @@ class Scene:
         self.__activeCam = self.__cameraList.get(cameraName)
         return  self.__activeCam
 
-    def getActiveCamere(self):
+    def getActiveCamera(self):
         return self.__activeCam
     def removeCamera(self, cameraName):
         self.__cameraList.pop(cameraName)
+
+    def subdivide(self, shapeName, value):
+        shape = self.__shapeListLS.get(shapeName)
+        shape.subdivide(value)
+        self.updateShapeListSS(shapeName)
 
     def renderScene(self):
         print("renderScene")

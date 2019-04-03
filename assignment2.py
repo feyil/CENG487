@@ -15,6 +15,9 @@ from Cylinder import Cylinder
 from Box import Box
 from Scene import *
 
+# Second camera pitch and yaw movement can jump if we rotate using arrow key 360 degree we can use 
+# both camera without any problem. I am looking for the cause of the jump for "cam2"
+
 
 # Create a Scene which has two camera one of them active view
 # also has three shape in it.
@@ -50,7 +53,7 @@ mainScene.addCamera("cam2", camera2)
 
 box = Box()
 box.drawAs(GL_QUADS)
-box.draw(2) # subdivision
+box.draw(0) # subdivision
 
 mainScene.addShape("box", box)
 
@@ -87,6 +90,10 @@ def main():
 	mainWindow.getScene().linearMoveShapeto("box", -4, 0, 0, tranformationSpace=Space.SCENE) # in scene space
 	mainWindow.getScene().linearMoveShapeto("cylinder", 4, 0, 0) # in scene space
 	# -------------------- end ----------------------
+
+	# ---------Print usage to the terminal------
+	mainWindow.usage()
+	# --------------- end ----------------
 
 	# ----------- start the window --------------
 	mainWindow.run()
