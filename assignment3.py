@@ -3,12 +3,11 @@
 # StudentId: 230201057
 # March 2019
 
-from OpenGL.GL import GL_QUADS
+from LegacyDrawer import LegacyDrawer
 
 from Window import WindowGL
 from InteractiveWindow import InteractiveWindow
 from Camera import *
-
 
 from Sphere import Sphere
 from Cylinder import Cylinder
@@ -48,29 +47,28 @@ camera2.updateCamera()
 mainScene.addCamera("cam2", camera2)
 
 # ----------- end -----------
-
+drawer = LegacyDrawer()
 # -------- Create a box shape and add to the scene -------
 
 box = Box()
-box.drawAs(GL_QUADS)
-box.draw(0) # subdivision
-
+box.create(0) # subdivision
+box.setDrawer(drawer)
 mainScene.addShape("box", box)
 
 # ------------ end -------------------
 
 # ---------- Create a sphere and add to the scene ----------
 sphere = Sphere()
-sphere.drawAs(GL_QUADS)
-sphere.draw(scanAngle=30) # subdivision
+sphere.setDrawer(drawer)
+sphere.create(scanAngle=30) # subdivision
 
 mainScene.addShape("sphere", sphere)
 # ------------ end ----------------
 
 # ---------- Create a cylinder and add to the scene --------
 cylinder = Cylinder()
-cylinder.drawAs(GL_QUADS)
-cylinder.draw(scanAngle=30) # subdivision
+cylinder.setDrawer(drawer)
+cylinder.create(scanAngle=30) # subdivision
 
 mainScene.addShape("cylinder", cylinder)
 # ------------------ end ---------------------------

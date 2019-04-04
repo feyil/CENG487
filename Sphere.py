@@ -5,7 +5,7 @@ class Sphere(Primitive3D):
     def __init__(self):
         Primitive3D.__init__(self)
 
-    def draw(self, radius = 2, scanAngle = 30):
+    def create(self, radius = 2, scanAngle = 30):
         alpha = theta = scanAngle
         alphaStep = thetaStep = 0
 

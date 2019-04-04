@@ -28,7 +28,7 @@ class WindowGL:
 
     def drawScene(self):
         # Configureable via inheritance
-        self.__scene.drawGL()
+        self.__scene.draw()
 
     def registerEvents(self):
         # Configureable via inheritance

@@ -12,20 +12,30 @@ import copy
 class Shape():
     
     def __init__(self):
+        # I am thinking to turn all of them protected
         self.__verticesList = []
+        self.__faceList = []
         self.__size = 0
 
+        # I will fix their logic later
         self.__matrix_stack = []
         self.__finalTransformMatrix = 0
 
-        # OpenGL related
-        self.__drawAs = 0
-        # End
+        self.__drawer = 0
 
     def addVertice(self, vx, vy, vz):
         self.__verticesList.append(Vec3d(vx, vy, vz, 1))
         self.__size += 1
         return self
+    
+    def removeVertice(self, verticeIndex):
+        del self.__verticesList[verticeIndex]
+
+    def addFace(self, verticeIndexList):
+        self.__faceList.append(verticeIndexList)
+    
+    def removeFace(self, faceIndex):
+        del self.__faceList[faceIndex]
 
     def addTransformation(self, aMath3d):
         if(len(self.__matrix_stack) == 0):
@@ -71,24 +81,18 @@ class Shape():
             output += i.__str__() + "\n"
         return output
 
-    # OpenGL related code
-    def drawAs(self, drawAs):
-        self.__drawAs = drawAs
+    # I am not sure to put it to there
+    def subdivide(self):
+        print("Shape Subdivide")
 
-    def drawGL(self):
-        #glTranslate(0,0,-6)
-        glBegin(self.__drawAs)
-        color = 0
-        for i in self.getShape():
-		    color += 1
-		    if(color % 2 == 0):
-			    glColor3f(0.8, 0.3, 0.8)
-		    else:
-			    glColor3f(0.2, 0.8, 0.3)
-		    glVertex3f(i.getX(), i.getY(), i.getZ())
-        glEnd() 
-    # End
-            
+    def setDrawer(self, drawer):
+        self.__drawer = drawer
+
+        self.__drawer.setVerticeList(self.__verticesList)
+        self.__drawer.setFaceList(self.__faceList)
+
+    def draw(self):
+        self.__drawer.draw()
         
 if __name__ == "__main__":
     a = Shape()

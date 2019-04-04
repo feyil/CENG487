@@ -6,7 +6,7 @@ class Cylinder(Primitive3D):
     def __init__(self):
         Primitive3D.__init__(self)
     
-    def draw(self, r = 1, length = 3, scanAngle = 30):
+    def create(self, r = 1, length = 3, scanAngle = 30):
         step = scanAngle
         
         self.subdivison = {"angle" : scanAngle}

@@ -15,7 +15,7 @@ class Box(Primitive3D):
         self.__quadLength = 2
         self.defineQuad(self, self.__quadLength / 2.0)
 
-    def createBox(self):
+    def __createBox(self):
         distance = 1
         angle = self.calculateScanAngle(distance)
         
@@ -32,9 +32,9 @@ class Box(Primitive3D):
         scanShape.transformShape(Mat3d().defineRotationMatrix(angle, "Z"))
         self.addVerticesOfShape(scanShape)
 
-    def draw(self, division = 0):
+    def create(self, division = 0):
         # I will improve it later
-        # Idea of Cylinder draw can be applied here may be
+        # Idea of Cylinder create can be applied here may be
         # Clone probably slow down the process significantly
         step = self.__quadLength / float(2 ** division)
         
@@ -59,7 +59,7 @@ class Box(Primitive3D):
             tmp.transformShape(Mat3d().defineTranslationMatrix(0,-step,0))
             self.addVerticesOfShape(tmp)
         
-        self.createBox()
+        self.__createBox()
 
     def __str__(self):
         print(Primitive3D.__str__(self))

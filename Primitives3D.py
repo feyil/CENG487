@@ -26,7 +26,7 @@ class Primitive3D(Shape):
             elif(value == '-'):
                 new_angle = angle * 2
 
-            self.draw(scanAngle = new_angle)
+            self.create(scanAngle = new_angle)
 
             self.subdivison = {"angle" : new_angle}
         elif("number" in self.subdivison):
@@ -44,10 +44,10 @@ class Primitive3D(Shape):
             if(new_number == 8): # it have hard times if we exceed this number
                 new_number = 4
             self.subdivison = {"number" : new_number}
-            self.draw(division = new_number)
+            self.create(division = new_number)
 
         
-    def draw(self, scanAngle = 0, division = 0):
+    def create(self, scanAngle = 0, division = 0):
         pass
 
     def calculateRadian(self, degree):

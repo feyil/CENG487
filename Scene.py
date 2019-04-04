@@ -24,7 +24,7 @@ class Scene:
 
         self.__shapeListLS = {}    # shapes in their local space
         self.__shapeListSS = {}    # shapes in their scene space
-        
+                  
     def addShape(self, shapeName, shape):
         self.__shapeListLS.update({shapeName : shape.clone()})
 
@@ -98,6 +98,7 @@ class Scene:
 
     def getActiveCamera(self):
         return self.__activeCam
+
     def removeCamera(self, cameraName):
         self.__cameraList.pop(cameraName)
 
@@ -109,12 +110,13 @@ class Scene:
     def renderScene(self):
         print("renderScene")
 
-    def drawGL(self):
+    def draw(self):
         for i in self.__shapeListSS.values():
+            # I will break camera class coupling with the shape class
             # It may not be efficent I am thinking on it.
             i = self.__activeCam.view(i)
-            i.drawGL()
-
+            i.draw()
+            
     def __str__(self):
         return "Scene"
 
