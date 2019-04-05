@@ -6,6 +6,7 @@
 from OpenGL.GL import *
 
 from Drawer import Drawer
+from Vec3d import Vec3d
 
 
 class ObjDrawer(Drawer):
@@ -14,4 +15,18 @@ class ObjDrawer(Drawer):
         Drawer.__init__(self)
 
     def draw(self):
-        print("Draw")
+        glBegin(GL_QUADS)
+        color = 0
+        for face in self._faceList:
+            for verticeIndex in face:
+                color += 1
+                if(color % 2 == 0):
+			        glColor3f(0.8, 0.3, 0.8)
+                else:
+			        glColor3f(0.2, 0.8, 0.3)
+                vertice = self._verticeList[verticeIndex]
+                glVertex3f(vertice.getX(), vertice.getY(), vertice.getZ())
+        glEnd() 
+
+if __name__ == "__main__":
+    obj = ObjDrawer()

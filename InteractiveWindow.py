@@ -5,12 +5,19 @@
 
 from OpenGL.GL import *
 from OpenGL.GLUT import *
+from OpenGL.GLUT import fonts
+from OpenGL.GLX import c_void_p
+
 from OpenGL.GLU import *
 
 from Window import WindowGL
 from Camera import *
 
 from Scene import *
+
+
+
+
 
 # Note local space rotation causes scene space movement to rotate shape small amount
 # I will find it later probably local space rotation reflect to scene space final matrix and cause rotation 
@@ -99,9 +106,6 @@ class InteractiveWindow(WindowGL):
             self.subdivideKey("cylinder", args)
             self.shapeMovement("cylinder", args)
             
-
-            
-
     def subdivideKey(self, shapeName, args):
         key = args[0]
 
@@ -222,9 +226,9 @@ class InteractiveWindow(WindowGL):
                 "     -> down -> pitch down\n" +
                 "     -> left -> yaw left\n" +
                 "     -> right -> yaw right\n" +
-                "4 -> select box\n" +
-                "5 -> select sphere\n" +
-                "6 -> select cylinder\n" +
+                "4 -> select object\n" +
+                "(Not Valid)5 -> select sphere\n" +
+                "(Not Valid)6 -> select cylinder\n" +
                 "+ -> increase subdivision for selected shape\n" +
                 "- -> decrease subidivison for selected shape\n" +
                 "Select a shape and move using\n" +

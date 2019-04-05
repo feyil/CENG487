@@ -5,6 +5,7 @@
 
 from OpenGL.GL import *
 from OpenGL.GLUT import *
+
 from OpenGL.GLU import *
 import sys
 
@@ -56,7 +57,7 @@ class WindowGL:
         # Initialize GL
         self.__initializeGL()
         # End
-
+     
         # Start Event Loop
         glutMainLoop()
         # End

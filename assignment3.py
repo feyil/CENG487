@@ -3,7 +3,11 @@
 # StudentId: 230201057
 # March 2019
 
+import sys
+
 from LegacyDrawer import LegacyDrawer
+from ObjDrawer import ObjDrawer
+from ObjParser import ObjParser
 
 from Window import WindowGL
 from InteractiveWindow import InteractiveWindow
@@ -35,7 +39,6 @@ mainScene.addCamera("mainCamera", camera)
 
 # ------- end --------------
 
-
 # ---------- cam2 ----------
 camera2 = Camera()
 camera2.setCameraFront(0,0,1)
@@ -47,36 +50,22 @@ camera2.updateCamera()
 mainScene.addCamera("cam2", camera2)
 
 # ----------- end -----------
-drawer = LegacyDrawer()
-# -------- Create a box shape and add to the scene -------
 
-box = Box()
-box.create(0) # subdivision
-box.setDrawer(drawer)
-mainScene.addShape("box", box)
+#----------------- Obj File ------------------
+objDrawer = ObjDrawer()
 
-# ------------ end -------------------
+objParser = ObjParser(sys.argv[1])
+shape = objParser.parse()
 
-# ---------- Create a sphere and add to the scene ----------
-sphere = Sphere()
-sphere.setDrawer(drawer)
-sphere.create(scanAngle=30) # subdivision
+shape.setDrawer(objDrawer)
 
-mainScene.addShape("sphere", sphere)
-# ------------ end ----------------
+mainScene.addShape("box", shape)
+# --------------- end --------------------
 
-# ---------- Create a cylinder and add to the scene --------
-cylinder = Cylinder()
-cylinder.setDrawer(drawer)
-cylinder.create(scanAngle=30) # subdivision
-
-mainScene.addShape("cylinder", cylinder)
-# ------------------ end ---------------------------
 
 # ----------- Choose active camera for the view ----------
 mainScene.selectCamera("mainCamera")
 # --------------- end ---------------------
-
 
 def main():
 	mainWindow = InteractiveWindow("App", 800, 600)
@@ -85,17 +74,21 @@ def main():
 	# --------------- end --------------------------
 
 	# ----------- make some arrangement to fit the screen ------
-	mainWindow.getScene().linearMoveShapeto("box", -4, 0, 0, tranformationSpace=Space.SCENE) # in scene space
-	mainWindow.getScene().linearMoveShapeto("cylinder", 4, 0, 0) # in scene space
+	# mainWindow.getScene().linearMoveShapeto("box", -4, 0, 0, tranformationSpace=Space.SCENE) # in scene space
+	# mainWindow.getScene().linearMoveShapeto("cylinder", 4, 0, 0) # in scene space
 	# -------------------- end ----------------------
 
 	# ---------Print usage to the terminal------
 	mainWindow.usage()
 	# --------------- end ----------------
-
+	print("*****GLUT fonts can not be imported somehow so I can't able to print subdivision level to the screen")
 	# ----------- start the window --------------
+	
 	mainWindow.run()
 	# ---------------- end ----------------------
+
+
 	
+
 main()
 

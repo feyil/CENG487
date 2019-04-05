@@ -12,6 +12,8 @@ import copy
 class Shape():
     
     def __init__(self):
+        self.__shapeName = ""
+    
         # I am thinking to turn all of them protected
         self.__verticesList = []
         self.__faceList = []
@@ -22,6 +24,11 @@ class Shape():
         self.__finalTransformMatrix = 0
 
         self.__drawer = 0
+
+        self.__subdivisionHistory = []
+
+    def setShapeName(self, shapeName):
+        self.__shapeName = shapeName
 
     def addVertice(self, vx, vy, vz):
         self.__verticesList.append(Vec3d(vx, vy, vz, 1))
@@ -79,19 +86,71 @@ class Shape():
         output = ""
         for i in self.__verticesList:
             output += i.__str__() + "\n"
+        output += "Face List: \n"
+        output += self.__faceList.__str__() + "\n"
         return output
 
     # I am not sure to put it to there
-    def subdivide(self):
-        print("Shape Subdivide")
+    def subdivide(self, indicator = '+'):
+        if(indicator == '+'):
+            newFaceList = []
+
+            for face in self.__faceList:
+                newFaceList += self.__subdivideFace(face)
+                
+            self.__subdivisionHistory.append(self.__faceList)
+   
+            self.__faceList = newFaceList
+        elif(indicator == '-'):
+            if(len(self.__subdivisionHistory) != 0):
+                self.__faceList = self.__subdivisionHistory.pop()
+
+    def __subdivideFace(self, quadFace):
+        index = self.__size
+        xCenter = Vec3d(0,0,0,0)
+        for verticeIndex in quadFace:
+            xCenter.addVec3d(self.__verticesList[verticeIndex])
+        xCenter.scalarMultiplication(0.25)
+        self.__verticesList.append(xCenter)
+        xCenterIndex = index
+
+        x1 = Vec3d(0,0,0,0)
+        x1.addVec3d(self.__verticesList[quadFace[0]]).addVec3d(self.__verticesList[quadFace[1]]).scalarMultiplication(0.5)
+        self.__verticesList.append(x1)
+        x1Index = index + 1
+
+        x2 = Vec3d(0,0,0,0)
+        x2.addVec3d(self.__verticesList[quadFace[1]]).addVec3d(self.__verticesList[quadFace[2]]).scalarMultiplication(0.5)
+        self.__verticesList.append(x2)
+        x2Index = index + 2
+
+        x3 = Vec3d(0,0,0,0)
+        x3.addVec3d(self.__verticesList[quadFace[2]]).addVec3d(self.__verticesList[quadFace[3]]).scalarMultiplication(0.5)
+        self.__verticesList.append(x3)
+        x3Index = index + 3
+
+        x4 = Vec3d(0,0,0,0)
+        x4.addVec3d(self.__verticesList[quadFace[0]]).addVec3d(self.__verticesList[quadFace[3]]).scalarMultiplication(0.5)
+        self.__verticesList.append(x4)
+        x4Index = index + 4
+        
+        self.__size += 5
+
+        faceList = [[x1Index, quadFace[1], x2Index, xCenterIndex],
+                    [x2Index, quadFace[2], x3Index, xCenterIndex],
+                    [x3Index, quadFace[3], x4Index, xCenterIndex],
+                    [x4Index, quadFace[0], x1Index, xCenterIndex]]
+        
+        return faceList
+        
 
     def setDrawer(self, drawer):
         self.__drawer = drawer
 
+    def draw(self):
         self.__drawer.setVerticeList(self.__verticesList)
         self.__drawer.setFaceList(self.__faceList)
 
-    def draw(self):
         self.__drawer.draw()
         
 if __name__ == "__main__":
