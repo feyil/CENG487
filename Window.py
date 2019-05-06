@@ -49,7 +49,10 @@ class WindowGL:
         # When we are doing nothing, redraw the scene.
         glutIdleFunc(self.__drawGLScene)
         # End
-	
+        
+        # Set glut display function
+        glutDisplayFunc(self.__drawGLScene)
+
 	    # Register the function called when our window is resized.
         glutReshapeFunc(self.__resizeGLScene)
         # End
