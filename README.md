@@ -1,4 +1,4 @@
-# Introduction to Computer Graphics with Python and OpenGL
+## Introduction to Computer Graphics with Python and OpenGL
 
 * Include my individual work to complete given three assignment of the course.
 * Development environment python version is 2.7.15rc1:
@@ -59,6 +59,18 @@
   -------------------------- END ---------------------------------------
  
   ```
+  
+* Screenshots from development view:
+
+  
+![alt text](https://github.com/feyil/CENG487/blob/master/screenshots/fromcam2.png "Page 1")
+
+![alt text](https://github.com/feyil/CENG487/blob/master/screenshots/multipleobject.png "Page 2")
+
+![alt text](https://github.com/feyil/CENG487/blob/master/screenshots/opengl1.png "Page 3")
+
+![alt text](https://github.com/feyil/CENG487/blob/master/screenshots/subdividewithrotation.png "Page 3")
+
   
 
   
