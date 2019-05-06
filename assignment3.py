@@ -81,7 +81,7 @@ def main():
 	# ---------Print usage to the terminal------
 	mainWindow.usage()
 	# --------------- end ----------------
-	print("*****GLUT fonts can not be imported somehow so I can't able to print subdivision level to the screen")
+	
 	# ----------- start the window --------------
 	
 	mainWindow.run()
