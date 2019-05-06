@@ -1,13 +1,12 @@
-# CENG487
-## Introduction to Computer Graphics(with python and OpenGL)
+# Introduction to Computer Graphics(with python and OpenGL) CENG487
 
 * Include my individual work to complete given three assignment of the course.
-
-
 * Example usage of the program:
   ```
   python assignment3.py ecube.obj
   ```
+  
+```text
 
 ------------------------ KEY CONFIGURATION ------------------------
 1 -> switch mainCamera
@@ -46,4 +45,5 @@ Rotation of selected shape
  -> l -> local space use x, y, z button to rotate
 -------------------------- END ---------------------------------------
 
+```
 
