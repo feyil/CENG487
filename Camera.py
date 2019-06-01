@@ -22,6 +22,10 @@ class CamMovement:
     LEFT = 4
     RIGHT = 5
 
+class CamFocus:
+    FREE_MOVE = 0
+    FOCUS_TARGET = 1
+
 class Camera:
 
     def __init__(self):
@@ -40,6 +44,12 @@ class Camera:
         self.__yaw = 0
         self.__pitch = 0
         # End
+
+        # CamFocus
+        self.__camFocus = CamFocus.FREE_MOVE
+
+        # Target to Focus
+        self.__target = None
 
         # LookAtMatrix
         self.__lookAtMatrix = []
@@ -86,10 +96,22 @@ class Camera:
             if(self.__pitch < -89.0):
                 self.__pitch = -89.0
 
-        self.__updateCameraVectors()
+        self.__updateCameraVectors() 
+
+    def __calculateTarget(self):
+        if(self.__camFocus == CamFocus.FREE_MOVE):
+            self.__cameraTarget = self.__cameraPosition.clone().addVec3d(self.__cameraFront)
+        elif(self.__camFocus == CamFocus.FOCUS_TARGET):
+            self.__cameraTarget = self.__target
+
+    def setTarget(self, targetX, targetY, targetZ):
+        self.__target = Vec3d(targetX, targetY, targetZ, 0)
+
+    def setFocus(self, camFocus = CamFocus.FREE_MOVE):
+        self.__camFocus = camFocus
 
     def updateCamera(self):
-        self.__cameraTarget = self.__cameraPosition.clone().addVec3d(self.__cameraFront)
+        self.__calculateTarget()
     
         # LookAt matrix first 3 row
         self.__cameraDirection = self.__cameraPosition.clone().substractVec3d(self.__cameraTarget).normalize()
