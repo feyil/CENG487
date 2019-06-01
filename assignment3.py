@@ -19,6 +19,10 @@ from Cylinder import Cylinder
 from Box import Box
 from Scene import *
 
+# input checking
+if(len(sys.argv) != 2):
+	print("\nPlease provide .obj file:\n  >python assignment4.py *.obj\n")
+	exit()
 
 # Second camera pitch and yaw movement can jump if we rotate using arrow key 360 degree we can use 
 # both camera without any problem. I am looking for the cause of the jump for "cam2"
@@ -70,11 +74,6 @@ mainScene.selectCamera("mainCamera")
 # --------------- end ---------------------
 
 def main():
-	# input checking
-	if(len(sys.argv) != 2):
-		print("\nPlease provide .obj file:\n  >python assignment4.py *.obj\n")
-		exit()
-
 	mainWindow = MouseControlledWindow("App", 800, 600)
 	# ---------- set mainScene as the window display source
 	mainWindow.setScene(mainScene)
