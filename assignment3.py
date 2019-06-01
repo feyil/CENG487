@@ -11,6 +11,7 @@ from ObjParser import ObjParser
 
 from Window import WindowGL
 from InteractiveWindow import InteractiveWindow
+from MouseControlledWindow import MouseControlledWindow
 from Camera import *
 
 from Sphere import Sphere
@@ -18,10 +19,6 @@ from Cylinder import Cylinder
 from Box import Box
 from Scene import *
 
-# input checking
-if(len(sys.argv) != 2):
-	print("\nPlease provide .obj file:\n  >python assignment4.py *.obj\n")
-	exit()
 
 # Second camera pitch and yaw movement can jump if we rotate using arrow key 360 degree we can use 
 # both camera without any problem. I am looking for the cause of the jump for "cam2"
@@ -73,7 +70,12 @@ mainScene.selectCamera("mainCamera")
 # --------------- end ---------------------
 
 def main():
-	mainWindow = InteractiveWindow("App", 800, 600)
+	# input checking
+	if(len(sys.argv) != 2):
+		print("\nPlease provide .obj file:\n  >python assignment4.py *.obj\n")
+		exit()
+
+	mainWindow = MouseControlledWindow("App", 800, 600)
 	# ---------- set mainScene as the window display source
 	mainWindow.setScene(mainScene)
 	# --------------- end --------------------------
@@ -83,17 +85,11 @@ def main():
 	# mainWindow.getScene().linearMoveShapeto("cylinder", 4, 0, 0) # in scene space
 	# -------------------- end ----------------------
 
-	# ---------Print usage to the terminal------
-	mainWindow.usage()
-	# --------------- end ----------------
-	
 	# ----------- start the window --------------
 	
 	mainWindow.run()
 	# ---------------- end ----------------------
 
-
-	
 
 main()
 

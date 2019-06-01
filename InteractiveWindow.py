@@ -5,59 +5,12 @@
 
 from OpenGL.GL import *
 from OpenGL.GLUT import *
-from OpenGL.GLUT import fonts
-from OpenGL.GLX import c_void_p
 
 from OpenGL.GLU import *
-
 from Window import WindowGL
 from Camera import *
 
 from Scene import *
-
-
-
-
-
-# Note local space rotation causes scene space movement to rotate shape small amount
-# I will find it later probably local space rotation reflect to scene space final matrix and cause rotation 
-
-# ------------------------ KEY CONFIGURATION ------------------------
-# 1 -> switch mainCamera
-# 2 -> switch cam2
-# 3 -> selected camera free move
-#   -> w -> in
-#   -> s -> out
-#   -> a -> right
-#   -> d -> left
-#   -> e -> up
-#   -> r -> down
-#   -> up -> pitch up
-#   -> down -> pitch down
-#   -> left -> yaw left
-#   -> right -> yaw right
-# 4 -> select box
-# 5 -> select sphere
-# 6 -> select cylinder
-# + -> increase subdivision for selected shape
-# - -> decrease subidivison for selected shape
-# Select a shape and move using
-#   Scene Space
-#       -> w -> up
-#       -> s -> down
-#       -> a -> left
-#       -> d -> right
-#       -> e -> in
-#       -> r -> out
-#   Local Space
-#       -> up 
-#       -> down
-#       -> left
-#       -> right
-# Rotation of selected shape
-#   -> k -> scene space use x, y, z button to rotate
-#   -> l -> local space use x, y, z button to rotate
-# -------------------------- END ---------------------------------------
 
 class InteractiveWindow(WindowGL):
 
@@ -65,6 +18,8 @@ class InteractiveWindow(WindowGL):
         WindowGL.__init__(self, windowName, width, height)
         self.__selected = 0
         self.__space = 0
+
+        self.usage()
 
     def registerEvents(self):
         glutKeyboardFunc(self.processKey)
