@@ -35,8 +35,15 @@ class MouseControlledWindow(WindowGL):
        glutMotionFunc(self.mouseMove )
 
     def keyPressed(self, *args):
-        if args[0] == ESCAPE:
+        if(args[0] == ESCAPE):
             sys.exit()
+        elif(args[0] == '+' or args[0] == '-'):
+            self.getScene().subdivide("mainShape", args[0])
+        elif(args[0] == 'f'):
+            camera = self.getScene().getActiveCamera()
+            camera.setCameraPosition(0,0,12)
+            camera.setWorldUp(0,1,0)
+            camera.updateCamera()
     
     def specialKeyPressed(self, *args):
         pass
@@ -54,22 +61,26 @@ class MouseControlledWindow(WindowGL):
         self.mouseX = x
         self.mouseY = y
 
+        self.rotated = 0
+
     def mouseMove(self, x, y):
         camera = self.getScene().getActiveCamera()
 
        	if self.event.altPressed == False:
 			return
-
-        xOffset = (x - self.mouseX)
-        yOffset = (y -self.mouseY)
+        xSpeed = 0.06
+        ySpeed = 0.06
+        xOffset = (x - self.mouseX) * xSpeed
+        yOffset = (y -self.mouseY)  * ySpeed
 
         if (self.event.button == GLUT_RIGHT_BUTTON):
 			pass
         elif (self.event.button == GLUT_MIDDLE_BUTTON):
             pass
         elif (self.event.button == GLUT_LEFT_BUTTON):
-            camera.rotateMove(xOffset, yOffset)
-
+            camera.rotateCamera(yOffset, axis="X")
+            camera.rotateCamera(xOffset, axis="Y")
+         
 		# store last positions
         self.mouseX = x
         self.mouseY = y
@@ -79,7 +90,13 @@ class MouseControlledWindow(WindowGL):
         self.event.y = y 
 
     def usage(self):
-        pass
+        print("------------------------ KEY CONFIGURATION ------------------------\n" +
+                "-> Press ESC to quit\n" +
+                "-> CRTL + ALT + MOUSE LEFT BUTTON and move mouse to rotate camera\n" +
+                "-> Press f key to reset camera position\n" +
+                "-> Press + key to increase subdivision level\n" +
+                "-> Press - key to decrease subidivision level\n")  
+
 
     def __str__(self):
         return WindowGL.__str__(self)

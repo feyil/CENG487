@@ -61,7 +61,7 @@ shape = objParser.parse()
 
 shape.setDrawer(objDrawer)
 
-mainScene.addShape("box", shape)
+mainScene.addShape("mainShape", shape)
 # --------------- end --------------------
 
 

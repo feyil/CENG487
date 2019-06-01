@@ -50,6 +50,7 @@ class Camera:
 
         # Target to Focus
         self.__target = None
+        self.__rotated = 0
 
         # LookAtMatrix
         self.__lookAtMatrix = []
@@ -83,7 +84,7 @@ class Camera:
         self.updateCamera()
     
     def rotateMove(self, xoffset, yoffset, sensitivity = 0.05, constrainPitch = True):
-
+        
         xoffset *= sensitivity
         yoffset *= sensitivity
 
@@ -96,8 +97,26 @@ class Camera:
             if(self.__pitch < -89.0):
                 self.__pitch = -89.0
 
-        self.__updateCameraVectors() 
+        self.__updateCameraVectors()
 
+    def rotateCamera(self, degree, axis="X"):
+        self.__rotated += degree
+        radian = self.calculateRadian(self.__rotated)
+        
+        self.setFocus(CamFocus.FOCUS_TARGET)
+        self.setTarget(0,0,0)
+
+        if(axis == "X"):
+            # derivative
+            self.setWorldUp(0, math.cos(radian), math.sin(radian))
+        if(axis == "Y"):
+            self.setWorldUp(0, 1, 0)
+        rotMat = Mat3d().defineRotationMatrix(degree, axis)
+    
+        self.__cameraPosition = rotMat.multiplyByVec3d(self.__cameraPosition)
+    
+        self.__updateCameraVectors()
+       
     def __calculateTarget(self):
         if(self.__camFocus == CamFocus.FREE_MOVE):
             self.__cameraTarget = self.__cameraPosition.clone().addVec3d(self.__cameraFront)
@@ -134,7 +153,7 @@ class Camera:
         return lookAt
 
     def calculateRadian(self, degree):
-        return degree * (math.pi / 180)  
+        return float(degree) * (math.pi / 180)  
     
     def __updateCameraVectors(self):
         # Calculate front vector
