@@ -9,6 +9,7 @@ import copy
 
 from drawers.Drawer import *
 from utils import Vec3d, Mat3d
+from subdividers import SimpleSubdivider, SubdividerType
 
 class Shape():
     
@@ -26,7 +27,7 @@ class Shape():
 
         self.__drawer = 0
 
-        self.__subdivisionHistory = []
+        self.__subdivider = None
 
     def setShapeName(self, shapeName):
         self.__shapeName = shapeName
@@ -66,9 +67,24 @@ class Shape():
             self.addVertice(i.getX(), i.getY(), i.getZ())
         return self
 
-    def getShape(self):
+    def setVerticeList(self, verticeList):
+        self.__verticesList = verticeList
+
+    def getVerticeList(self):
         return self.__verticesList
 
+    def setFaceList(self, faceList):
+        self.__faceList = faceList
+    
+    def getFaceList(self):
+        return self.__faceList
+
+    def setSize(self, size):
+        self.__size = size
+
+    def getSize(self):
+        return self.__size
+    
     def getFinalTransformationMatrix(self):
         return self.__finalTransformMatrix
 
@@ -80,71 +96,18 @@ class Shape():
         self.__size = 0
         return self
 
-    def clone(self):
-        return copy.deepcopy(self)
-
-    def __str__(self):
-        output = ""
-        for i in self.__verticesList:
-            output += i.__str__() + "\n"
-        output += "Face List: \n"
-        output += self.__faceList.__str__() + "\n"
-        return output
-
-    # I am not sure to put it to there
     def subdivide(self, indicator = '+'):
-        if(indicator == '+'):
-            newFaceList = []
-
-            for face in self.__faceList:
-                newFaceList += self.__subdivideFace(face)
-                
-            self.__subdivisionHistory.append(self.__faceList)
-   
-            self.__faceList = newFaceList
-        elif(indicator == '-'):
-            if(len(self.__subdivisionHistory) != 0):
-                self.__faceList = self.__subdivisionHistory.pop()
-
-    def __subdivideFace(self, quadFace):
-        index = self.__size
-        xCenter = Vec3d(0,0,0,0)
-        for verticeIndex in quadFace:
-            xCenter.addVec3d(self.__verticesList[verticeIndex])
-        xCenter.scalarMultiplication(0.25)
-        self.__verticesList.append(xCenter)
-        xCenterIndex = index
-
-        x1 = Vec3d(0,0,0,0)
-        x1.addVec3d(self.__verticesList[quadFace[0]]).addVec3d(self.__verticesList[quadFace[1]]).scalarMultiplication(0.5)
-        self.__verticesList.append(x1)
-        x1Index = index + 1
-
-        x2 = Vec3d(0,0,0,0)
-        x2.addVec3d(self.__verticesList[quadFace[1]]).addVec3d(self.__verticesList[quadFace[2]]).scalarMultiplication(0.5)
-        self.__verticesList.append(x2)
-        x2Index = index + 2
-
-        x3 = Vec3d(0,0,0,0)
-        x3.addVec3d(self.__verticesList[quadFace[2]]).addVec3d(self.__verticesList[quadFace[3]]).scalarMultiplication(0.5)
-        self.__verticesList.append(x3)
-        x3Index = index + 3
-
-        x4 = Vec3d(0,0,0,0)
-        x4.addVec3d(self.__verticesList[quadFace[0]]).addVec3d(self.__verticesList[quadFace[3]]).scalarMultiplication(0.5)
-        self.__verticesList.append(x4)
-        x4Index = index + 4
-        
-        self.__size += 5
-
-        faceList = [[x1Index, quadFace[1], x2Index, xCenterIndex],
-                    [x2Index, quadFace[2], x3Index, xCenterIndex],
-                    [x3Index, quadFace[3], x4Index, xCenterIndex],
-                    [x4Index, quadFace[0], x1Index, xCenterIndex]]
-        
-        return faceList
-        
-
+        if(self.__subdivider != None):
+            self.__subdivider.subdivide(indicator)
+    
+    def setSubdivider(self, subdividerType):    
+        if(subdividerType == SubdividerType.SIMPLE_SUBDIVIDER):
+            self.__subdivider = SimpleSubdivider(self)
+        elif(subdividerType == SubdividerType.CATMULL_CLARK_SUBDIVIDER):
+            pass
+        else:
+            pass
+    
     def setDrawer(self, drawer):
         self.__drawer = drawer
         self.setDrawStyle()
@@ -157,6 +120,17 @@ class Shape():
         self.__drawer.setFaceList(self.__faceList)
 
         self.__drawer.draw()
+
+    def clone(self):
+        return copy.deepcopy(self)
+
+    def __str__(self):
+        output = ""
+        for i in self.__verticesList:
+            output += i.__str__() + "\n"
+        output += "Face List: \n"
+        output += self.__faceList.__str__() + "\n"
+        return output
         
 if __name__ == "__main__":
     a = Shape()

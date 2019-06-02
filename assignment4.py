@@ -11,6 +11,7 @@ from windows import *
 from cameras import *
 from shapes import *
 from scenes import *
+from subdividers import *
 
 # input checking
 if(len(sys.argv) != 2):
@@ -53,6 +54,7 @@ objParser = ObjParser(sys.argv[1])
 shape = objParser.parse()
 
 shape.setDrawer(objDrawer)
+shape.setSubdivider(SubdividerType.SIMPLE_SUBDIVIDER)
 
 
 mainScene.addShape("mainShape", shape)
