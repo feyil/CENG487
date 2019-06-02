@@ -54,7 +54,7 @@ objParser = ObjParser(sys.argv[1])
 shape = objParser.parse()
 
 shape.setDrawer(objDrawer)
-shape.setSubdivider(SubdividerType.SIMPLE_SUBDIVIDER)
+shape.setSubdivider(SubdividerType.CATMULL_CLARK_SUBDIVIDER)
 
 
 mainScene.addShape("mainShape", shape)

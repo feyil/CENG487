@@ -9,7 +9,7 @@ import copy
 
 from drawers.Drawer import *
 from utils import Vec3d, Mat3d
-from subdividers import SimpleSubdivider, SubdividerType
+from subdividers import SimpleSubdivider, SubdividerType, CatmullClarkSubdivider
 
 class Shape():
     
@@ -104,10 +104,11 @@ class Shape():
         if(subdividerType == SubdividerType.SIMPLE_SUBDIVIDER):
             self.__subdivider = SimpleSubdivider(self)
         elif(subdividerType == SubdividerType.CATMULL_CLARK_SUBDIVIDER):
-            pass
+            print("Hello")
+            self.__subdivider = CatmullClarkSubdivider(self)
         else:
             pass
-    
+
     def setDrawer(self, drawer):
         self.__drawer = drawer
         self.setDrawStyle()

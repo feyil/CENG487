@@ -6,4 +6,5 @@ class CatmullClarkSubdivider(Subdivider):
         Subdivider.__init__(self, shape)
 
     def subdivide(self, indicator="+"):
+        print("Camull Abi")
         pass
