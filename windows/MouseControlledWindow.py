@@ -3,10 +3,10 @@ from OpenGL.GLUT import *
 
 from OpenGL.GLU import *
 from Window import WindowGL
-from Camera import *
-from Drawer import *
 
-from Scene import *
+from cameras import Camera
+from drawers import Drawer, DrawStyle
+from scenes import Scene
 
 ESCAPE = '\033'
 

@@ -4,7 +4,7 @@
 # April 2019
 
 import sys
-from Shape import Shape
+from shapes import Shape
 
 class ObjParser:
     # Will create a shape object at the end of parse operation

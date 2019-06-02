@@ -1,6 +1,6 @@
-from Shape import Shape
-from Mat3d import Mat3d
-from Vec3d import Vec3d
+
+from shapes import Shape
+from utils import Vec3d, Mat3d
 
 import math
 

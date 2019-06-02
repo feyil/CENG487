@@ -8,9 +8,9 @@ from OpenGL.GLUT import *
 
 from OpenGL.GLU import *
 from Window import WindowGL
-from Camera import *
+from cameras import Camera, CamMovement
 
-from Scene import *
+from scenes import Scene, Space
 
 class InteractiveWindow(WindowGL):
 
@@ -44,8 +44,8 @@ class InteractiveWindow(WindowGL):
             if(self.__selected != '4'):
                 self.__selected = key
             
-            self.subdivideKey("box", args)
-            self.shapeMovement("box", args)
+            self.subdivideKey("mainShape", args)
+            self.shapeMovement("mainShape", args)
         if(self.__selected == '5' or key == '5'):
             # Sphere selected
             if(self.__selected != '5'):

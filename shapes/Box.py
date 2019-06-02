@@ -5,8 +5,7 @@
 
 from Primitives3D import Primitive3D
 
-from Mat3d import Mat3d
-from Vec3d import Vec3d
+from utils import Vec3d, Mat3d
 
 class Box(Primitive3D):
 

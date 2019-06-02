@@ -6,7 +6,7 @@
 from OpenGL.GL import *
 
 from Drawer import *
-from Vec3d import Vec3d
+from utils import Vec3d
 
 
 class ObjDrawer(Drawer):

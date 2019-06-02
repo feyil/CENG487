@@ -6,10 +6,8 @@
 import math
 import copy
 
-
-from Mat3d import Mat3d
-from Vec3d import Vec3d
-from Shape import Shape
+from utils import Vec3d, Mat3d
+from shapes import Shape
 
 # Inspired from learnopengl.com
 

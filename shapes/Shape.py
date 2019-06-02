@@ -5,10 +5,10 @@
 
 from OpenGL.GL import *
 
-from Vec3d import Vec3d
-from Mat3d import Mat3d
-from Drawer import *
 import copy
+
+from drawers.Drawer import *
+from utils import Vec3d, Mat3d
 
 class Shape():
     

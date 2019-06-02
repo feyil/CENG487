@@ -5,20 +5,12 @@
 
 import sys
 
-from LegacyDrawer import LegacyDrawer
-from ObjDrawer import ObjDrawer
-from Drawer import *
-from ObjParser import ObjParser
-
-from Window import WindowGL
-from InteractiveWindow import InteractiveWindow
-from MouseControlledWindow import MouseControlledWindow
-from Camera import *
-
-from Sphere import Sphere
-from Cylinder import Cylinder
-from Box import Box
-from Scene import *
+from drawers import *
+from parsers import *
+from windows import *
+from cameras import *
+from shapes import *
+from scenes import *
 
 # input checking
 if(len(sys.argv) != 2):
@@ -27,7 +19,7 @@ if(len(sys.argv) != 2):
 
 # Create a Scene which has two camera one of them active view
 # also has three shape in it.
-mainScene = Scene("mainScene")
+mainScene = Scene("mainScene") 
 
 # ------ mainCamera --------
 
@@ -61,7 +53,6 @@ objParser = ObjParser(sys.argv[1])
 shape = objParser.parse()
 
 shape.setDrawer(objDrawer)
-shape.setDrawStyle(DrawStyle.SMOOTH)
 
 
 mainScene.addShape("mainShape", shape)
@@ -73,6 +64,7 @@ mainScene.selectCamera("mainCamera")
 # --------------- end ---------------------
 
 def main():
+	#mainWindow = InteractiveWindow("App", 800, 600)
 	mainWindow = MouseControlledWindow("App", 800, 600)
 	# ---------- set mainScene as the window display source
 	mainWindow.setScene(mainScene)

@@ -3,13 +3,10 @@
 # StudentId: 230201057
 # March 2019
 
-from Box import Box
-from Sphere import Sphere
-from Mat3d import Mat3d
-from Vec3d import Vec3d
-from Camera import Camera
-from Shape import Shape
-from Drawer import *
+from shapes import Box, Sphere, Shape
+from utils import Vec3d, Mat3d
+from cameras import Camera
+from drawers import Drawer, DrawStyle
 
 class Space:
     LOCAL = 0
