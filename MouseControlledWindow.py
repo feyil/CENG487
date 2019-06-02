@@ -4,6 +4,7 @@ from OpenGL.GLUT import *
 from OpenGL.GLU import *
 from Window import WindowGL
 from Camera import *
+from Drawer import *
 
 from Scene import *
 
@@ -44,6 +45,12 @@ class MouseControlledWindow(WindowGL):
             camera.setCameraPosition(0,0,12)
             camera.setWorldUp(0,1,0)
             camera.updateCamera()
+        elif(args[0] == '4'):
+            self.getScene().setDrawStyle(DrawStyle.WIRE)
+        elif(args[0] == '5'):
+            self.getScene().setDrawStyle(DrawStyle.SMOOTH)
+        elif(args[0] == '6'):
+            self.getScene().setDrawStyle(DrawStyle.WIRE_ON_SHADED)
     
     def specialKeyPressed(self, *args):
         pass
@@ -95,7 +102,10 @@ class MouseControlledWindow(WindowGL):
                 "-> CRTL + ALT + MOUSE LEFT BUTTON and move mouse to rotate camera\n" +
                 "-> Press f key to reset camera position\n" +
                 "-> Press + key to increase subdivision level\n" +
-                "-> Press - key to decrease subidivision level\n")  
+                "-> Press - key to decrease subidivision level\n" + 
+                "-> Press 4 to draw WIRES\n" +
+                "-> Press 5 to draw SMOOTH\n" +
+                "-> Press 6 to draw WIRE ON SHADED")  
 
 
     def __str__(self):

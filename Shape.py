@@ -7,6 +7,7 @@ from OpenGL.GL import *
 
 from Vec3d import Vec3d
 from Mat3d import Mat3d
+from Drawer import *
 import copy
 
 class Shape():
@@ -146,7 +147,11 @@ class Shape():
 
     def setDrawer(self, drawer):
         self.__drawer = drawer
-
+        self.setDrawStyle()
+    
+    def setDrawStyle(self, drawStyle = DrawStyle.NODRAW):
+        self.__drawer.setDrawStyle(drawStyle)
+    
     def draw(self):
         self.__drawer.setVerticeList(self.__verticesList)
         self.__drawer.setFaceList(self.__faceList)

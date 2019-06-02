@@ -7,6 +7,7 @@ import sys
 
 from LegacyDrawer import LegacyDrawer
 from ObjDrawer import ObjDrawer
+from Drawer import *
 from ObjParser import ObjParser
 
 from Window import WindowGL
@@ -23,10 +24,6 @@ from Scene import *
 if(len(sys.argv) != 2):
 	print("\nPlease provide .obj file:\n  >python assignment4.py *.obj\n")
 	exit()
-
-# Second camera pitch and yaw movement can jump if we rotate using arrow key 360 degree we can use 
-# both camera without any problem. I am looking for the cause of the jump for "cam2"
-
 
 # Create a Scene which has two camera one of them active view
 # also has three shape in it.
@@ -45,15 +42,15 @@ mainScene.addCamera("mainCamera", camera)
 
 # ------- end --------------
 
-# ---------- cam2 ----------
-camera2 = Camera()
-camera2.setCameraFront(0,0,1)
-camera2.setCameraPosition(0,0,-12)
-camera2.setWorldUp(0,1,0)
-camera2.updateCamera()
+# # ---------- cam2 ----------
+# camera2 = Camera()
+# camera2.setCameraFront(0,0,1)
+# camera2.setCameraPosition(0,0,-12)
+# camera2.setWorldUp(0,1,0)
+# camera2.updateCamera()
 
-# add to the scene
-mainScene.addCamera("cam2", camera2)
+# # add to the scene
+# mainScene.addCamera("cam2", camera2)
 
 # ----------- end -----------
 
@@ -64,6 +61,8 @@ objParser = ObjParser(sys.argv[1])
 shape = objParser.parse()
 
 shape.setDrawer(objDrawer)
+shape.setDrawStyle(DrawStyle.SMOOTH)
+
 
 mainScene.addShape("mainShape", shape)
 # --------------- end --------------------

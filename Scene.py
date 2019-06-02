@@ -9,6 +9,7 @@ from Mat3d import Mat3d
 from Vec3d import Vec3d
 from Camera import Camera
 from Shape import Shape
+from Drawer import *
 
 class Space:
     LOCAL = 0
@@ -24,6 +25,8 @@ class Scene:
 
         self.__shapeListLS = {}    # shapes in their local space
         self.__shapeListSS = {}    # shapes in their scene space
+
+        self.__drawStyle = DrawStyle.SMOOTH
                   
     def addShape(self, shapeName, shape):
         self.__shapeListLS.update({shapeName : shape.clone()})
@@ -106,14 +109,15 @@ class Scene:
         shape = self.__shapeListLS.get(shapeName)
         shape.subdivide(value)
         self.updateShapeListSS(shapeName)
-
-    def renderScene(self):
-        print("renderScene")
+        
+    def setDrawStyle(self, drawStyle):
+        self.__drawStyle = drawStyle
 
     def draw(self):
         for i in self.__shapeListSS.values():
             # I will break camera class coupling with the shape class
             # It may not be efficent I am thinking on it.
+            i.setDrawStyle(self.__drawStyle)
             i = self.__activeCam.view(i)
             i.draw()
             
