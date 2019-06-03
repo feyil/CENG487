@@ -48,6 +48,11 @@ class Vec3d:
         for i in range(4):
             self.__vector[i] -= vect[i]
         return self
+
+    def divideBy(self, scalar):
+        for i in range(4):
+            self.__vector[i] /= float(scalar)
+        return self
     
     def scalarMultiplication(self, value):
         for i in range(4):
