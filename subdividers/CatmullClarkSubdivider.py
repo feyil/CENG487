@@ -17,6 +17,8 @@ class CatmullClarkSubdivider(Subdivider):
         self.__edgePointDict = {}
         self.__vertexPointDict = {}
 
+        #TODO introduce faceList
+        
     def getMesh(self):
         return self.__mesh
 
