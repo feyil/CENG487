@@ -26,13 +26,16 @@ class CatmullClarkSubdivider(Subdivider):
 
         return index
 
+    def getVertex(self, vertexNum):
+        return self.__vertexList[vertexNum]
+
     def getMesh(self):
         return self.__mesh
 
     def subdivide(self, indicator="+"):
         print("Catmull Abi")
-        vertexNum = self.calculateFacePoint(10)
-        print(self.__vertexList[vertexNum])
+        index = self.calculateEdgePoint(12)
+        print(self.getVertex(index))
         pass
 
     def subdivideFace(self, faceNum):
@@ -58,8 +61,29 @@ class CatmullClarkSubdivider(Subdivider):
         return index
 
     def calculateEdgePoint(self, edgeNum):
-        pass
-    
+        if(edgeNum in self.__edgePointDict):
+            return self.__edgePointDict[edgeNum]
+
+        mesh = self.getMesh()
+        averageList = []
+
+        vertexNums = mesh.edgeToVertices(edgeNum)
+        for vertexNum in vertexNums:
+            vertex = mesh.getVertex(vertexNum)
+            averageList.append(vertex)
+
+        faceNums = mesh.edgeToFaces(edgeNum)
+        for faceNum in faceNums:
+            vertexNum = self.calculateFacePoint(faceNum)
+            averageList.append(self.getVertex(vertexNum))
+
+        edgePoint = self.calculateAverageOfVertices(averageList)
+
+        index = self.addVertex(edgePoint)
+        self.__edgePointDict[edgeNum] = index
+
+        return index
+
     def calculateVertexPoint(self, vertexNum):
         pass
 
