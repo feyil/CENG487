@@ -10,6 +10,16 @@ class Mesh:
 
         self.createEdgeList()
 
+    # getters
+    def getVertex(self, vertexNum):
+        return self._verticeList[vertexNum]
+
+    def getFace(self, faceNum):
+        return self._faceList[faceNum]
+
+    def getEdge(self, edgeNum):
+        return self._edgeList[edgeNum]
+
 
     # face  
     def faceToVertices(self, faceNum):
@@ -114,7 +124,6 @@ class Mesh:
 
     def getFaceList(self):
         return self._faceList
-
     
     def createEdgeList(self):
         for face in self._faceList:
