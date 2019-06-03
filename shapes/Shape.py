@@ -103,8 +103,7 @@ class Shape():
     def setSubdivider(self, subdividerType):    
         if(subdividerType == SubdividerType.SIMPLE_SUBDIVIDER):
             self.__subdivider = SimpleSubdivider(self)
-        elif(subdividerType == SubdividerType.CATMULL_CLARK_SUBDIVIDER):
-            print("Hello")
+        elif(subdividerType == SubdividerType.CATMULL_CLARK_SUBDIVIDER):""
             self.__subdivider = CatmullClarkSubdivider(self)
         else:
             pass

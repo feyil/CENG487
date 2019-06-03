@@ -10,6 +10,8 @@ class Mesh:
 
         self.createEdgeList()
 
+        print(self.getVertex(0))
+
     # getters
     def getVertex(self, vertexNum):
         return self._verticeList[vertexNum]
