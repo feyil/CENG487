@@ -19,6 +19,7 @@ class FullAdjacenyMesh(Mesh):
         # v0: v1,v2; F0; e0,e2
         vertexAT = []
 
+
     def faceToVertices(self, face):
         pass
     
