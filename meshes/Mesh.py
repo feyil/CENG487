@@ -1,5 +1,5 @@
 
-
+import copy
 
 class Mesh:
 
@@ -13,13 +13,13 @@ class Mesh:
 
     # getters
     def getVertex(self, vertexNum):
-        return self._verticeList[vertexNum]
-
+        return self._verticeList[vertexNum].clone()
+        
     def getFace(self, faceNum):
-        return self._faceList[faceNum]
+        return copy.copy(self._faceList[faceNum])
 
     def getEdge(self, edgeNum):
-        return self._edgeList[edgeNum]
+        return copy.copy(self._edgeList[edgeNum])
 
 
     # face  
