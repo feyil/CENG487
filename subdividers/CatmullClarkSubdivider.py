@@ -19,6 +19,8 @@ class CatmullClarkSubdivider(Subdivider):
         self.__edgePointDict = {}
         self.__vertexPointDict = {}
 
+        self.__subdivisionHistory = []
+
     def addVertex(self, vertex):
         # it is not efficent probably 
         index = len(self.__vertexList)
@@ -33,8 +35,6 @@ class CatmullClarkSubdivider(Subdivider):
         return self.__mesh
 
     def update(self):
-        self.__mesh.updateMesh(self.__vertexList, self.__faceList)
-
         self.__vertexList = []
         self.__faceList = []
 
@@ -43,19 +43,33 @@ class CatmullClarkSubdivider(Subdivider):
         self.__vertexPointDict = {}
 
     def updateShape(self, vertexList, faceList):
+        mesh = self.getMesh()
         shape = self.getShape()
+        
+        mesh.updateMesh(vertexList, faceList)
 
         shape.setVerticeList(vertexList)
         shape.setFaceList(faceList)
         shape.setSize(len(vertexList))
+    
+    def addToHistory(self):
+        shape = self.getShape()
+
+        self.__subdivisionHistory.append(shape.getFaceList())
+        self.__subdivisionHistory.append(shape.getVerticeList())
+
+    def backToHistory(self):
+        if(len(self.__subdivisionHistory) != 0):
+            self.updateShape(self.__subdivisionHistory.pop(), self.__subdivisionHistory.pop())
 
     def subdivide(self, indicator="+"):
-        print("Catmull-Clark subdivision input taken")
-        print("Subidivison in progess... wait")
-
+        mesh = self.getMesh()
+        
         if(indicator == '+'):
-            mesh = self.getMesh()
-            
+            print("Catmull-Clark subdivision input taken")
+            print("Subidivison in progess... wait")
+            self.addToHistory()
+
             faceCount = mesh.numberOfFaces()
             for faceNum in range(faceCount):
                 if(faceNum % 10 == 0):
@@ -64,14 +78,13 @@ class CatmullClarkSubdivider(Subdivider):
                 self.__faceList += dividedFaces
        
             self.updateShape(self.__vertexList, self.__faceList)
-
+            print("Subidivison Done")
         elif(indicator == '-'):
-            pass
+            self.backToHistory()
 
-            
+        # prepare subdivider to the next step
         self.update()
-        print("Subidivison Done")
-
+        
     def subdivideFace(self, faceNum):
         mesh = self.getMesh()
    
@@ -107,10 +120,6 @@ class CatmullClarkSubdivider(Subdivider):
         dividedFaces.append(f1)
         dividedFaces.append(f2)
         dividedFaces.append(f3)
-
-        # print(facePoint)
-        # print(edgePoints)
-        # print(vertexPoints)
 
         return dividedFaces
 

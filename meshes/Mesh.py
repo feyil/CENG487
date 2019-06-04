@@ -10,26 +10,6 @@ class Mesh:
 
         self.createEdgeList()
 
-    def updateMesh(self, verticeList, faceList):
-        self._verticeList = verticeList
-        self._faceList = faceList
-        self._edgeList = []
-        
-        self.createEdgeList()
-        
-    # getters
-    def getVertex(self, vertexNum):
-        return self._verticeList[vertexNum].clone()
-        
-    def getFace(self, faceNum):
-        return copy.copy(self._faceList[faceNum])
-
-    def getEdge(self, edgeNum):
-        return copy.copy(self._edgeList[edgeNum])
-
-    def numberOfFaces(self):
-        return len(self._faceList)
-
     # face  
     def faceToVertices(self, faceNum):
         return self._faceList[faceNum]
@@ -136,6 +116,15 @@ class Mesh:
 
     def getFaceList(self):
         return self._faceList
+
+    def getVertex(self, vertexNum):
+        return self._verticeList[vertexNum].clone()
+        
+    def getFace(self, faceNum):
+        return copy.copy(self._faceList[faceNum])
+
+    def getEdge(self, edgeNum):
+        return copy.copy(self._edgeList[edgeNum])
     
     def createEdgeList(self):
         for face in self._faceList:
@@ -181,3 +170,13 @@ class Mesh:
             counter += 1
         
         return None
+
+    def updateMesh(self, verticeList, faceList):
+        self._verticeList = verticeList
+        self._faceList = faceList
+        self._edgeList = []
+        
+        self.createEdgeList()
+        
+    def numberOfFaces(self):
+        return len(self._faceList)
