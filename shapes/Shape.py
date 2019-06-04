@@ -1,7 +1,7 @@
-# CENG 487 Assignment2 by
+# CENG 487 Assignment4 by
 # Furkan Emre Yilmaz
 # StudentId: 230201057
-# March 2019
+# June 2019
 
 from OpenGL.GL import *
 
@@ -11,7 +11,7 @@ from drawers.Drawer import *
 from utils import Vec3d, Mat3d
 from subdividers import SimpleSubdivider, SubdividerType, CatmullClarkSubdivider
 
-class Shape():
+class Shape:
     
     def __init__(self):
         self.__shapeName = ""

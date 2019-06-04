@@ -1,3 +1,8 @@
+# CENG 487 Assignment4 by
+# Furkan Emre Yilmaz
+# StudentId: 230201057
+# June 2019
+
 from Subdivider import Subdivider, SubdividerType
 from utils import Vec3d
 

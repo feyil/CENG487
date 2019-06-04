@@ -1,7 +1,7 @@
-# CENG 487 Assignment2 by
+# CENG 487 Assignment4 by
 # Furkan Emre Yilmaz
 # StudentId: 230201057
-# March 2019
+# June 2019
 
 from shapes import Box, Sphere, Shape
 from utils import Vec3d, Mat3d
