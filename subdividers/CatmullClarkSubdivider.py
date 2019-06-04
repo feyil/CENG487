@@ -33,9 +33,8 @@ class CatmullClarkSubdivider(Subdivider):
         return self.__mesh
 
     def subdivide(self, indicator="+"):
-        print("Catmull Abi")
-        index = self.calculateEdgePoint(12)
-        print(self.getVertex(index))
+        print("Catmull Abi")     
+        print(self.findValenceOfVertex(6))
         pass
 
     def subdivideFace(self, faceNum):
@@ -88,7 +87,10 @@ class CatmullClarkSubdivider(Subdivider):
         pass
 
     def findValenceOfVertex(self, vertexNum):
-        pass
+        mesh = self.getMesh()
+        edgeNums = mesh.vertexToEdges(vertexNum)
+
+        return len(edgeNums)
     
     def calculateQ(self, vertexNum):
         pass
