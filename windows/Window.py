@@ -19,7 +19,14 @@ class WindowGL:
 
         self.__window = 0
         self.__scene = 0
-        
+
+        self.__drawingState = True
+
+    def setDrawingState(self, state):
+        self.__drawingState = state
+
+    def getDrawingState(self):
+        return self.__drawingState
 
     def setScene(self, scene):
         self.__scene = scene
@@ -97,18 +104,22 @@ class WindowGL:
         # End
     
     def __drawGLScene(self):
-	    # Clear the screen and the depth buffer
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        glLoadIdentity()
-        # End
+        if(self.getDrawingState()):
+            # Clear the screen and the depth buffer
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+            glLoadIdentity()
+            # End
 
-        # Draw scene
-        self.drawScene()
-        # End
+            # Draw scene
+            self.drawScene()
+            # End
 
-        # Swap buffer
-        glutSwapBuffers()
-        # End
+            # Swap buffer
+            glutSwapBuffers()
+            # End
+        else:
+            glLoadIdentity()
+            glutSwapBuffers()
 
     def __resizeGLScene(self, Width, Height):
         # Updates size
