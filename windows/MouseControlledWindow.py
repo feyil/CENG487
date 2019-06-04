@@ -6,7 +6,7 @@ from Window import WindowGL
 
 from cameras import Camera
 from drawers import Drawer, DrawStyle
-from scenes import Scene
+from scenes import Scene, Space
 
 ESCAPE = '\033'
 
@@ -53,7 +53,18 @@ class MouseControlledWindow(WindowGL):
             self.getScene().setDrawStyle(DrawStyle.WIRE_ON_SHADED)
     
     def specialKeyPressed(self, *args):
-        pass
+        scene = self.getScene()
+        shapeName = "mainShape"
+        scanAngle = 10
+
+        if(args[0] == GLUT_KEY_LEFT):
+            scene.rotateMoveShapeTo(shapeName, -scanAngle, "Y", Space.LOCAL)
+        elif(args[0] == GLUT_KEY_RIGHT):
+            scene.rotateMoveShapeTo(shapeName, scanAngle, "Y", Space.LOCAL)
+        elif(args[0] == GLUT_KEY_UP):
+            scene.rotateMoveShapeTo(shapeName, scanAngle, "X", Space.LOCAL)
+        elif(args[0] == GLUT_KEY_DOWN):
+            scene.rotateMoveShapeTo(shapeName, -scanAngle, "X", Space.LOCAL)
 
     def mousePressed(self, button, state, x, y):
         self.event.x = x   
@@ -105,7 +116,8 @@ class MouseControlledWindow(WindowGL):
                 "-> Press - key to decrease subidivision level\n" + 
                 "-> Press 4 to draw WIRES\n" +
                 "-> Press 5 to draw SMOOTH\n" +
-                "-> Press 6 to draw WIRE ON SHADED")  
+                "-> Press 6 to draw WIRE ON SHADED\n" +
+                "-> Rotate shape with arrow keys(UP, DOWN, LEFT, RIGHT) in local space")  
 
 
     def __str__(self):
