@@ -69,12 +69,15 @@ class Mesh:
         return vertexNums
     
     def vertexToFaces(self, vertexNum):
-        faces = []
+        faceNums = []
+
+        counter = 0
         for face in self._faceList:
             for vertex in face:
                 if(vertexNum == vertex):
-                    faces.append()
-        return faces
+                    faceNums.append(counter)
+            counter += 1
+        return faceNums
 
     def vertexToEdges(self, vertexNum):
         edgeNums = []
