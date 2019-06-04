@@ -34,8 +34,7 @@ class CatmullClarkSubdivider(Subdivider):
 
     def subdivide(self, indicator="+"):
         print("Catmull Abi")
-        print(self.__facePointDict)
-        print(self.calculateQ(5))
+        print(self.calculateEdgeMidpoint(5))
         pass
 
     def subdivideFace(self, faceNum):
@@ -108,6 +107,19 @@ class CatmullClarkSubdivider(Subdivider):
 
     def calculateR(self, vertexNum):
         pass
+
+    def calculateEdgeMidpoint(self, edgeNum):
+        mesh = self.getMesh()
+        averageList = []
+
+        vertexNums = mesh.getEdge(edgeNum)
+        for vertexNum in vertexNums:
+            vertex = mesh.getVertex(vertexNum)
+            averageList.append(vertex)
+     
+        midpoint = self.calculateAverageOfVertices(averageList)
+
+        return midpoint
 
     def calculateAverageOfVertices(self, vertexList):
         counter = 0
