@@ -11,13 +11,12 @@ class CatmullClarkSubdivider(Subdivider):
 
         # Store vertices as Vec3d objects
         self.__vertexList = []
+        self.__faceList = []
 
         # All points to the vertexList indexes
         self.__facePointDict = {}
         self.__edgePointDict = {}
         self.__vertexPointDict = {}
-
-        #TODO introduce faceList
 
     def addVertex(self, vertex):
         # it is not efficent probably 
@@ -34,12 +33,62 @@ class CatmullClarkSubdivider(Subdivider):
 
     def subdivide(self, indicator="+"):
         print("Catmull Abi")
-        index = self.calculateVertexPoint(6)
-        print(self.getVertex(index))
+        mesh = self.getMesh()
+        
+        faceCount = mesh.numberOfFaces()
+        for faceNum in range(faceCount):
+            dividedFaces = self.subdivideFace(faceNum)
+            self.__faceList += dividedFaces
+        
+        self.getShape().setVerticeList(self.__vertexList)
+        self.getShape().setFaceList(self.__faceList)
+        self.getShape().setSize(len(self.__vertexList))
+
+        print(self.__faceList)
+        print(self.__vertexList)
         pass
 
     def subdivideFace(self, faceNum):
-        pass
+        mesh = self.getMesh()
+   
+        # all has references to self.__vertexList
+        facePoint = self.calculateFacePoint(faceNum)
+        edgePoints = []
+        vertexPoints = []
+
+        edgeNums = mesh.faceToEdges(faceNum)
+        for edgeNum in edgeNums:
+            edgePoint = self.calculateEdgePoint(edgeNum)
+            edgePoints.append(edgePoint)
+
+        vertexNums = mesh.faceToVertices(faceNum)
+        for vertexNum in vertexNums:
+            vertexPoint = self.calculateVertexPoint(vertexNum)
+            vertexPoints.append(vertexPoint)
+
+        dividedFaces = self.connectDivisionQuad(facePoint, edgePoints, vertexPoints)
+
+        return dividedFaces
+     
+    def connectDivisionQuad(self, facePoint, edgePoints, vertexPoints):
+        dividedFaces = []
+
+        # I found it by try and error
+        f0 = [vertexPoints[3], edgePoints[0], facePoint, edgePoints[3]]
+        f1 = [vertexPoints[0], edgePoints[1], facePoint, edgePoints[0]]
+        f2 = [vertexPoints[2], edgePoints[3], facePoint, edgePoints[2]]
+        f3 = [vertexPoints[1], edgePoints[2], facePoint, edgePoints[1]]
+    
+        dividedFaces.append(f0)
+        dividedFaces.append(f1)
+        dividedFaces.append(f2)
+        dividedFaces.append(f3)
+
+        # print(facePoint)
+        # print(edgePoints)
+        # print(vertexPoints)
+
+        return dividedFaces
 
     def calculateFacePoint(self, faceNum):
         if(faceNum in self.__facePointDict):

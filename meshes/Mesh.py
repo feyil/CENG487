@@ -21,6 +21,8 @@ class Mesh:
     def getEdge(self, edgeNum):
         return copy.copy(self._edgeList[edgeNum])
 
+    def numberOfFaces(self):
+        return len(self._faceList)
 
     # face  
     def faceToVertices(self, faceNum):
