@@ -1,6 +1,7 @@
 from Subdivider import Subdivider
 from meshes import *
 from utils import Vec3d
+import copy
 
 class CatmullClarkSubdivider(Subdivider):
 
@@ -31,22 +32,45 @@ class CatmullClarkSubdivider(Subdivider):
     def getMesh(self):
         return self.__mesh
 
-    def subdivide(self, indicator="+"):
-        print("Catmull Abi")
-        mesh = self.getMesh()
-        
-        faceCount = mesh.numberOfFaces()
-        for faceNum in range(faceCount):
-            dividedFaces = self.subdivideFace(faceNum)
-            self.__faceList += dividedFaces
-        
-        self.getShape().setVerticeList(self.__vertexList)
-        self.getShape().setFaceList(self.__faceList)
-        self.getShape().setSize(len(self.__vertexList))
+    def update(self):
+        self.__mesh.updateMesh(self.__vertexList, self.__faceList)
 
-        print(self.__faceList)
-        print(self.__vertexList)
-        pass
+        self.__vertexList = []
+        self.__faceList = []
+
+        self.__facePointDict = {}
+        self.__edgePointDict = {}
+        self.__vertexPointDict = {}
+
+    def updateShape(self, vertexList, faceList):
+        shape = self.getShape()
+
+        shape.setVerticeList(vertexList)
+        shape.setFaceList(faceList)
+        shape.setSize(len(vertexList))
+
+    def subdivide(self, indicator="+"):
+        print("Catmull-Clark subdivision input taken")
+        print("Subidivison in progess... wait")
+
+        if(indicator == '+'):
+            mesh = self.getMesh()
+            
+            faceCount = mesh.numberOfFaces()
+            for faceNum in range(faceCount):
+                if(faceNum % 10 == 0):
+                    print("Progress {0} / {1}".format(faceCount, faceNum))
+                dividedFaces = self.subdivideFace(faceNum)
+                self.__faceList += dividedFaces
+       
+            self.updateShape(self.__vertexList, self.__faceList)
+
+        elif(indicator == '-'):
+            pass
+
+            
+        self.update()
+        print("Subidivison Done")
 
     def subdivideFace(self, faceNum):
         mesh = self.getMesh()

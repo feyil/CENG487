@@ -10,7 +10,13 @@ class Mesh:
 
         self.createEdgeList()
 
-
+    def updateMesh(self, verticeList, faceList):
+        self._verticeList = verticeList
+        self._faceList = faceList
+        self._edgeList = []
+        
+        self.createEdgeList()
+        
     # getters
     def getVertex(self, vertexNum):
         return self._verticeList[vertexNum].clone()
