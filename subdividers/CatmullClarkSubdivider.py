@@ -8,7 +8,7 @@ class CatmullClarkSubdivider(Subdivider):
     def __init__(self, shape):
         Subdivider.__init__(self, shape)
 
-        self.__mesh = FullAdjacenyMesh(self.getShape().getVerticeList(), self.getShape().getFaceList()) 
+        self.__mesh = Mesh(self.getShape().getVerticeList(), self.getShape().getFaceList()) 
 
         # Store vertices as Vec3d objects
         self.__vertexList = []

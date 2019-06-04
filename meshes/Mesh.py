@@ -1,7 +1,7 @@
 
 import copy
 
-class Mesh:
+class Mesh(object):
 
     def __init__(self, verticeList, faceList):
         self._verticeList = verticeList
@@ -180,3 +180,9 @@ class Mesh:
         
     def numberOfFaces(self):
         return len(self._faceList)
+
+    def numberOfEdges(self):
+        return len(self._edgeList)
+
+    def numberOfVertices(self):
+        return len(self._verticeList)
