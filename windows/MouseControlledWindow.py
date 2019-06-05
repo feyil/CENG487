@@ -47,7 +47,7 @@ class MouseControlledWindow(WindowGL):
             self.getScene().subdivide("mainShape", args[0])
         elif(args[0] == 'f'):
             camera = self.getScene().getActiveCamera()
-            camera.setCameraPosition(0,0,12)
+            camera.setCameraPosition(0,25,100)
             camera.setWorldUp(0,1,0)
             camera.updateCamera()
         elif(args[0] == '4'):

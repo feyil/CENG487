@@ -26,7 +26,7 @@ mainScene = Scene("mainScene")
 
 camera = Camera()
 camera.setCameraFront(0,0,-1)
-camera.setCameraPosition(0,0,80)
+camera.setCameraPosition(0,25,80)
 camera.setWorldUp(0,1,0)
 camera.updateCamera()
 
@@ -54,12 +54,33 @@ objDrawer = ObjDrawer()
 shapeList = ObjParser.parseMulti(fileName)
 
 for shape in shapeList:
-	
+	name = shape.getShapeName()
 	shape.setDrawer(objDrawer)
-	shape.setSubdivider(SubdividerType.CATMULL_CLARK_SUBDIVIDER)
-	shape.setColor(1,1,0,0)
-	shape.setWireColor(1,0,0,0)
-	mainScene.addShape(shape.getShapeName(), shape)
+
+	if(name == "ShortBox"):
+		shape.setColor(0.5,0.5,0.5,0)
+	elif(name == "TallBox"):
+		shape.setColor(0.5,0.5,0.5,0)
+	elif(name ==  "Floor"):
+		shape.setColor(0.9,0.9,0.9,0)
+	elif(name == "Ceiling"):
+		shape.setColor(0.9,0.9,0.9,0)
+	elif(name == "LeftWall"):
+		shape.setColor(1,0,0,0)
+	elif(name == "RightWall"):
+		shape.setColor(0,1,0,0)
+	elif(name == "BackWall"):
+		shape.setColor(1,1,1,0)
+
+	mainScene.addShape(name, shape)
+
+# for shape in shapeList:
+	
+# 	shape.setDrawer(objDrawer)
+# 	shape.setSubdivider(SubdividerType.CATMULL_CLARK_SUBDIVIDER)
+# 	shape.setColor(1,1,0,0)
+# 	shape.setWireColor(1,0,0,0)
+# 	mainScene.addShape(shape.getShapeName(), shape)
 
 # legacy = LegacyDrawer()
 # box = Box()
