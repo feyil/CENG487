@@ -80,6 +80,8 @@ class Camera:
             self.__cameraPosition.addVec3d(self.__cameraRight.clone().normalize().scalarMultiplication(speed))
         
         self.updateCamera()
+
+        self.setTarget(self.__cameraTarget.getX(), self.__cameraTarget.getY(), self.__cameraDirection.getZ())
     
     def rotateMove(self, xoffset, yoffset, sensitivity = 0.05, constrainPitch = True):
         
@@ -100,9 +102,11 @@ class Camera:
     def rotateCamera(self, degree, axis="X"):
         self.__rotated += degree
         radian = self.calculateRadian(self.__rotated)
-        
+
         self.setFocus(CamFocus.FOCUS_TARGET)
-        self.setTarget(0,0,0)
+        if(self.__target == None):
+            self.setTarget(0,0,0)
+        
 
         if(axis == "X"):
             # derivative
@@ -114,6 +118,8 @@ class Camera:
         self.__cameraPosition = rotMat.multiplyByVec3d(self.__cameraPosition)
     
         self.__updateCameraVectors()
+
+        self.setFocus(CamFocus.FREE_MOVE)
        
     def __calculateTarget(self):
         if(self.__camFocus == CamFocus.FREE_MOVE):
@@ -171,6 +177,7 @@ class Camera:
         output = ""
         output += "Camera Position:\n {0}\n".format(self.__cameraPosition)
         output += "Camera Target:\n {0}\n".format(self.__cameraTarget)
+        output += "Camera Front:\n {0}\n".format(self.__cameraFront)
         output += "Yaw Angle: {0}\n".format(self.__yaw)
         output += "Pitch Angle: {0}\n".format(self.__pitch)
         return output

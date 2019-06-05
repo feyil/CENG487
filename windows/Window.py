@@ -134,7 +134,7 @@ class WindowGL:
 
         # Reset The Current Viewport And Perspective Transformation
         glViewport(0, 0, Width, Height)		
-        self.__setPerspective(45, 0.1, 100)
+        self.__setPerspective(45, 0.1, 300)
         # End
 
         # Current Matrix Mode

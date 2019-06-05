@@ -9,7 +9,7 @@ from OpenGL.GLUT import *
 from OpenGL.GLU import *
 from Window import WindowGL
 
-from cameras import Camera
+from cameras import Camera,CamMovement
 from drawers import Drawer, DrawStyle
 from scenes import Scene, Space
 
@@ -91,15 +91,27 @@ class MouseControlledWindow(WindowGL):
 
        	if self.event.altPressed == False:
 			return
-        xSpeed = 0.06
-        ySpeed = 0.06
+        xSpeed = 0.3
+        ySpeed = 0.3
         xOffset = (x - self.mouseX) * xSpeed
         yOffset = (y -self.mouseY)  * ySpeed
 
+        acelerationFactor = 2
         if (self.event.button == GLUT_RIGHT_BUTTON):
-			pass
+            if(xOffset > 0):
+                camera.linearMove(CamMovement.FORWARD, xSpeed * acelerationFactor)
+            else:
+                camera.linearMove(CamMovement.BACKWARD, xSpeed * acelerationFactor)
         elif (self.event.button == GLUT_MIDDLE_BUTTON):
-            pass
+            if(xOffset > 0):
+                camera.linearMove(CamMovement.LEFT, xSpeed)
+            else:
+                camera.linearMove(CamMovement.RIGHT, xSpeed)
+
+            if(yOffset > 0):
+                camera.linearMove(CamMovement.UP, ySpeed)
+            else:
+                camera.linearMove(CamMovement.DOWN, ySpeed) 
         elif (self.event.button == GLUT_LEFT_BUTTON):
             camera.rotateCamera(yOffset, axis="X")
             camera.rotateCamera(xOffset, axis="Y")
@@ -116,13 +128,12 @@ class MouseControlledWindow(WindowGL):
         print("------------------------ KEY CONFIGURATION ------------------------\n" +
                 "-> Press ESC to quit\n" +
                 "-> CRTL + ALT + MOUSE LEFT BUTTON and move mouse to rotate camera\n" +
+                "-> CRLT + ALT + MOUSE MIDDLE BUTTON and move mouse to move target\n" +
+                "-> CRLT + ALT + MOUSE RIGHT BUTTON and move mouse to zomm in and out\n" +
                 "-> Press f key to reset camera position\n" +
-                "-> Press + key to increase subdivision level\n" +
-                "-> Press - key to decrease subidivision level\n" + 
                 "-> Press 4 to draw WIRES\n" +
                 "-> Press 5 to draw SMOOTH\n" +
-                "-> Press 6 to draw WIRE ON SHADED\n" +
-                "-> Rotate shape with arrow keys(UP, DOWN, LEFT, RIGHT) in local space")  
+                "-> Press 6 to draw WIRE ON SHADED")  
 
 
     def __str__(self):
