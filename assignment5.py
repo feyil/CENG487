@@ -57,9 +57,11 @@ for shape in shapeList:
 	
 	shape.setDrawer(objDrawer)
 	shape.setSubdivider(SubdividerType.CATMULL_CLARK_SUBDIVIDER)
-	
+	shape.setColor(1,1,0,0)
+	shape.setWireColor(1,0,0,0)
 	mainScene.addShape(shape.getShapeName(), shape)
 	 
+	
 # --------------- end --------------------
 
 

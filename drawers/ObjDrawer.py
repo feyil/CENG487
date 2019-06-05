@@ -27,7 +27,9 @@ class ObjDrawer(Drawer):
         glBegin(GL_POLYGON)
         for verticeIndex in face:
             color += 1
-            if(color % 2 == 0):
+            if(self._color != None):
+                glColor3f(self._color.getR(), self._color.getG(), self._color.getB())
+            elif(color % 2 == 0):
 			    glColor3f(0.8, 0.3, 0.8)
             else:
 			    glColor3f(0.2, 0.8, 0.3)
@@ -40,8 +42,8 @@ class ObjDrawer(Drawer):
         glLineWidth(self._wireWidth)
                 
         glBegin(GL_POLYGON)
-        # White Wires
-        glColor3f(1, 1, 1)
+        # Sets wire color
+        glColor3f(self._wireColor.getX(), self._wireColor.getY(), self._wireColor.getZ())
 
         for verticeIndex in face:
             vertice = self._verticeList[verticeIndex]

@@ -84,6 +84,9 @@ class Vec3d:
     
     def getZ(self):
         return self.__vector[2]
+
+    def getW(self):
+        return self.__vector[3]
     
     def getVec3d(self):
         return self.__vector

@@ -8,7 +8,7 @@ from OpenGL.GL import *
 import copy
 
 from drawers.Drawer import *
-from utils import Vec3d, Mat3d
+from utils import Vec3d, Mat3d, ColorRGBA
 from subdividers import SimpleSubdivider, SubdividerType, CatmullClarkSubdivider
 
 class Shape:
@@ -28,6 +28,19 @@ class Shape:
         self.__drawer = 0
 
         self.__subdivider = None
+
+        self.__color = None
+        self.__wireColor = None
+        self.__wireWidth = None
+
+    def setColor(self, r, g, b, a):
+        self.__color = ColorRGBA(r, g, b, a)
+
+    def setWireColor(self, r, g, b, a):
+        self.__wireColor = ColorRGBA(r, g, b, a)
+
+    def setWireWidth(self, width):
+        self.__wireWidth = width
 
     def setShapeName(self, shapeName):
         self.__shapeName = shapeName
@@ -119,10 +132,19 @@ class Shape:
         self.__drawer.setDrawStyle(drawStyle)
     
     def draw(self):
-        self.__drawer.setVerticeList(self.__verticesList)
-        self.__drawer.setFaceList(self.__faceList)
+        drawer = self.__drawer
+        
+        # give the shape to drawer
+        drawer.setVerticeList(self.__verticesList)
+        drawer.setFaceList(self.__faceList)
 
-        self.__drawer.draw()
+        # Coloring
+        drawer.setColor(self.__color)
+        drawer.setWireColor(self.__wireColor)
+        drawer.setWireWidth(self.__wireWidth)
+
+        # Fire the drawer
+        drawer.draw()
 
     def clone(self):
         return copy.deepcopy(self)
