@@ -37,8 +37,8 @@ class MouseControlledWindow(WindowGL):
     def registerEvents(self):
        glutKeyboardFunc(self.keyPressed)
        glutSpecialFunc(self.specialKeyPressed)
-       glutMouseFunc(self.mousePressed )
-       glutMotionFunc(self.mouseMove )
+       glutMouseFunc(self.mousePressed)
+       glutMotionFunc(self.mouseMove)
 
     def keyPressed(self, *args):
         if(args[0] == ESCAPE):
