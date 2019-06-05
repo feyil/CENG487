@@ -60,8 +60,12 @@ for shape in shapeList:
 	shape.setColor(1,1,0,0)
 	shape.setWireColor(1,0,0,0)
 	mainScene.addShape(shape.getShapeName(), shape)
-	 
-	
+
+# legacy = LegacyDrawer()
+# box = Box()
+# box.setDrawer(legacy)
+# box.create()
+# mainScene.addShape("box", box)
 # --------------- end --------------------
 
 

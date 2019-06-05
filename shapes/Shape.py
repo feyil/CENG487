@@ -47,6 +47,9 @@ class Shape:
 
     def getShapeName(self):
         return self.__shapeName
+    
+    def getShape(self):
+        return self.__verticesList
 
     def addVertice(self, vx, vy, vz):
         self.__verticesList.append(Vec3d(vx, vy, vz, 1))
