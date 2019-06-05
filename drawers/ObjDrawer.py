@@ -23,7 +23,7 @@ class ObjDrawer(Drawer):
 
     def drawSmooth(self, face):
         color = 0
- 
+
         glBegin(GL_POLYGON)
         for verticeIndex in face:
             color += 1

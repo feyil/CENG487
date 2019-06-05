@@ -26,7 +26,7 @@ mainScene = Scene("mainScene")
 
 camera = Camera()
 camera.setCameraFront(0,0,-1)
-camera.setCameraPosition(0,0,12)
+camera.setCameraPosition(0,0,80)
 camera.setWorldUp(0,1,0)
 camera.updateCamera()
 
@@ -48,16 +48,18 @@ mainScene.addCamera("mainCamera", camera)
 # ----------- end -----------
 
 #----------------- Obj File ------------------
+fileName = sys.argv[1]
+
 objDrawer = ObjDrawer()
+shapeList = ObjParser.parseMulti(fileName)
 
-objParser = ObjParser(sys.argv[1])
-shape = objParser.parse()
-
-shape.setDrawer(objDrawer)
-shape.setSubdivider(SubdividerType.CATMULL_CLARK_SUBDIVIDER)
-
-
-mainScene.addShape("mainShape", shape)
+for shape in shapeList:
+	
+	shape.setDrawer(objDrawer)
+	shape.setSubdivider(SubdividerType.CATMULL_CLARK_SUBDIVIDER)
+	
+	mainScene.addShape(shape.getShapeName(), shape)
+	 
 # --------------- end --------------------
 
 
