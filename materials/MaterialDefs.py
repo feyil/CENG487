@@ -53,9 +53,14 @@ class MaterialDefs:
     }
 
     CHROME = {
-	"materialName": "CHROME",
-	"ambient": [0.25, 0.25, 0.25, 1.0],
-	"diffuse":	[0.4, 0.4, 0.4, 1.0],
-	"specular": [0.774597, 0.774597, 0.774597, 1.0],
-	"shininess": 0.6 * 128.0
+	    "materialName": "CHROME",
+	    "ambient": [0.25, 0.25, 0.25, 1.0],
+	    "diffuse":	[0.4, 0.4, 0.4, 1.0],
+	    "specular": [0.774597, 0.774597, 0.774597, 1.0],
+	    "shininess": 0.6 * 128.0
+    }
+
+    LIGHT_BOX = {
+	    "materialName": "LIGHT_BOX",
+        "emission": [1.0, 1.0, 1.0, 1.0]
     }

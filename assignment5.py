@@ -64,7 +64,7 @@ for shape in shapeList:
 
 	if(name == "ShortBox"):
 		shape.setColor(0.5,0.5,0.5,0)
-		shape.setMaterial(Material(**MaterialDefs.BLACK_PLASTIC))
+		shape.setMaterial(Material(**MaterialDefs.YELLOW_PLASTIC))
 	elif(name == "TallBox"):
 		shape.setColor(0.5,0.5,0.5,0)
 		shape.setMaterial(Material(**MaterialDefs.YELLOW_PLASTIC))
@@ -91,12 +91,24 @@ dicLight = {
 	"lightNum": 0,
 	"ambient": [0.5, 0.5, 0.5, 1],
 	"diffuse": [1, 1, 1, 1],
-	"specular": [0.2, 0.2, 0.2, 1],
-	"direction": [0,0, 1],
+	"specular": [0.3, 0.3, 0.3, 1],
+	"position": [0,48, 0],
 }
 
-light1 = DirectionalLight(**dicLight)
+dicLight2 = {
+	"lightName": "Directional Light",
+	"lightNum": 1,
+	"ambient": [0.5, 0.5, 0.5, 1],
+	"diffuse": [1, 1, 1, 1],
+	"specular": [0.3, 0.3, 0.3, 1],
+	"position": [0, 20, 30],
+}
+
+
+light1 = PointLight(**dicLight)
+light2 = PointLight(**dicLight2)
 mainScene.addLight(light1)
+mainScene.addLight(light2)
 mainScene.lightsON()
 
 
