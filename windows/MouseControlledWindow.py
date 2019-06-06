@@ -49,6 +49,7 @@ class MouseControlledWindow(WindowGL):
             camera = self.getScene().getActiveCamera()
             camera.setCameraPosition(0,25,100)
             camera.setWorldUp(0,1,0)
+            camera.linearMove(CamMovement.FORWARD, 0.001) # little trick to focus the target point
             camera.updateCamera()
         elif(args[0] == '4'):
             self.getScene().setDrawStyle(DrawStyle.WIRE)
