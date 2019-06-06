@@ -12,6 +12,7 @@ from cameras import *
 from shapes import *
 from scenes import *
 from subdividers import *
+from materials import *
 
 # input checking
 if(len(sys.argv) != 2):
@@ -54,18 +55,30 @@ fileName = sys.argv[1]
 objDrawer = ObjDrawer()
 shapeList = ObjParser.parseMulti(fileName)
 
+gold = {
+	"materialName": "GOLD",
+	"ambient": [0.24725, 0.1995, 0.0745, 1.0],
+	"diffuse":	[0.75164, 0.60648, 0.22648, 1.0],
+	"specular": [0.628281, 0.555802, 0.366065, 1.0],
+	"shininess": 0.4
+}
+
+goldMaterial = Material(**gold)
+
 for shape in shapeList:
 	name = shape.getShapeName()
 	shape.setDrawer(objDrawer)
 
 	if(name == "ShortBox"):
 		shape.setColor(0.5,0.5,0.5,0)
+		shape.setMaterial(goldMaterial)
 	elif(name == "TallBox"):
 		shape.setColor(0.5,0.5,0.5,0)
 	elif(name ==  "Floor"):
 		shape.setColor(0.9,0.9,0.9,0)
 	elif(name == "Ceiling"):
 		shape.setColor(0.9,0.9,0.9,0)
+		shape.setMaterial(goldMaterial)
 	elif(name == "LeftWall"):
 		shape.setColor(1,0,0,0)
 	elif(name == "RightWall"):

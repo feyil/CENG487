@@ -3,6 +3,8 @@
 # StudentId: 230201057
 # June 2019
 
+from OpenGL.GL import * # for now
+
 from shapes import Box, Sphere, Shape
 from utils import Vec3d, Mat3d
 from cameras import Camera
@@ -111,13 +113,23 @@ class Scene:
         self.__drawStyle = drawStyle
 
     def draw(self):
+      
         for i in self.__shapeListSS.values():
             # I will break camera class coupling with the shape class
             # It may not be efficent I am thinking on it.
             i.setDrawStyle(self.__drawStyle)
             i = self.__activeCam.view(i)
             i.draw()
-            
+        
+        glLightfv(GL_LIGHT0, GL_AMBIENT, [0.2,0.2,0.2,1])
+        glLightfv(GL_LIGHT0, GL_DIFFUSE, [0.2,0.5,0.5,1])
+        glLightfv(GL_LIGHT0, GL_POSITION, [1,1,1,1])
+        glLightfv(GL_LIGHT0, GL_SPECULAR, [1,1,1,1])
+
+        glEnable(GL_LIGHTING)
+        glEnable(GL_LIGHT0)
+
+    
     def __str__(self):
         return "Scene"
 

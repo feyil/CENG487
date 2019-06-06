@@ -10,6 +10,7 @@ import copy
 from drawers.Drawer import *
 from utils import Vec3d, Mat3d, ColorRGBA
 from subdividers import SimpleSubdivider, SubdividerType, CatmullClarkSubdivider
+from materials import Material
 
 class Shape:
     
@@ -32,6 +33,14 @@ class Shape:
         self.__color = None
         self.__wireColor = None
         self.__wireWidth = None
+
+        self.__shapeMaterial = Material("default")
+
+    def setMaterial(self, material):
+        self.__shapeMaterial = material
+
+    def getMaterial(self):
+        return self.__shapeMaterial
 
     def setColor(self, r, g, b, a):
         self.__color = ColorRGBA(r, g, b, a)
@@ -136,7 +145,11 @@ class Shape:
     
     def draw(self):
         drawer = self.__drawer
+        material = self.__shapeMaterial    
         
+        # applying the material to the shape
+        material.applyMaterial()
+       
         # give the shape to drawer
         drawer.setVerticeList(self.__verticesList)
         drawer.setFaceList(self.__faceList)
@@ -145,9 +158,13 @@ class Shape:
         drawer.setColor(self.__color)
         drawer.setWireColor(self.__wireColor)
         drawer.setWireWidth(self.__wireWidth)
-
+        
         # Fire the drawer
         drawer.draw()
+
+        #material.applyMaterial()
+
+        
 
     def clone(self):
         return copy.deepcopy(self)
