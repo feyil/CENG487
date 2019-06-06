@@ -56,31 +56,7 @@ fileName = sys.argv[1]
 objDrawer = ObjDrawer()
 shapeList = ObjParser.parseMulti(fileName)
 
-gold = {
-	"materialName": "GOLD",
-	"ambient": [0.24725, 0.1995, 0.0745, 1.0],
-	"diffuse":	[0.75164, 0.60648, 0.22648, 1.0],
-	"specular": [0.628281, 0.555802, 0.366065, 1.0],
-	"shininess": 0.4 * 128.0
-}
 
-redPlastic = {
-	"materialName": "RED_PLASTIC",
-	"ambient": [0.0, 0.0, 0.0, 1.0],
-	"diffuse":	[0.5, 0.0, 0.0, 1.0],
-	"specular": [0.7, 0.6, 0.6, 1.0],
-	"shininess": 0.25 * 128.0
-}
-
-chrome = {
-	"materialName": "CHROME",
-	"ambient": [0.25, 0.25, 0.25, 1.0],
-	"diffuse":	[0.4, 0.4, 0.4, 1.0],
-	"specular": [0.774597, 0.774597, 0.774597, 1.0],
-	"shininess": 0.6 * 128.0
-}
-
-material = Material(**gold)
 
 for shape in shapeList:
 	name = shape.getShapeName()
@@ -88,29 +64,34 @@ for shape in shapeList:
 
 	if(name == "ShortBox"):
 		shape.setColor(0.5,0.5,0.5,0)
-		shape.setMaterial(material)
+		shape.setMaterial(Material(**MaterialDefs.BLACK_PLASTIC))
 	elif(name == "TallBox"):
 		shape.setColor(0.5,0.5,0.5,0)
+		shape.setMaterial(Material(**MaterialDefs.YELLOW_PLASTIC))
 	elif(name ==  "Floor"):
 		shape.setColor(0.9,0.9,0.9,0)
+		shape.setMaterial(Material(**MaterialDefs.WHITE_PLASTIC))
 	elif(name == "Ceiling"):
 		shape.setColor(0.9,0.9,0.9,0)
-		shape.setMaterial(material)
+		shape.setMaterial(Material(**MaterialDefs.WHITE_PLASTIC))
 	elif(name == "LeftWall"):
 		shape.setColor(1,0,0,0)
+		shape.setMaterial(Material(**MaterialDefs.RED_PLASTIC))
 	elif(name == "RightWall"):
 		shape.setColor(0,1,0,0)
+		shape.setMaterial(Material(**MaterialDefs.GREEN_PLASTIC))
 	elif(name == "BackWall"):
 		shape.setColor(1,1,1,0)
+		shape.setMaterial(Material(**MaterialDefs.WHITE_PLASTIC))
 
 	mainScene.addShape(name, shape)
 
 dicLight = {
 	"lightName": "Directional Light",
 	"lightNum": 0,
-	"ambient": [0.2, 0.2, 0.2, 1],
-	"diffuse": [0.5, 0.5, 0.5, 1],
-	"specular": [1.0, 1.0, 1.0, 1],
+	"ambient": [0.5, 0.5, 0.5, 1],
+	"diffuse": [1, 1, 1, 1],
+	"specular": [0.2, 0.2, 0.2, 1],
 	"direction": [0,0, 1],
 }
 
