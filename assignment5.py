@@ -13,6 +13,7 @@ from shapes import *
 from scenes import *
 from subdividers import *
 from materials import *
+from lights import *
 
 # input checking
 if(len(sys.argv) != 2):
@@ -60,10 +61,26 @@ gold = {
 	"ambient": [0.24725, 0.1995, 0.0745, 1.0],
 	"diffuse":	[0.75164, 0.60648, 0.22648, 1.0],
 	"specular": [0.628281, 0.555802, 0.366065, 1.0],
-	"shininess": 0.4
+	"shininess": 0.4 * 128.0
 }
 
-goldMaterial = Material(**gold)
+redPlastic = {
+	"materialName": "RED_PLASTIC",
+	"ambient": [0.0, 0.0, 0.0, 1.0],
+	"diffuse":	[0.5, 0.0, 0.0, 1.0],
+	"specular": [0.7, 0.6, 0.6, 1.0],
+	"shininess": 0.25 * 128.0
+}
+
+chrome = {
+	"materialName": "CHROME",
+	"ambient": [0.25, 0.25, 0.25, 1.0],
+	"diffuse":	[0.4, 0.4, 0.4, 1.0],
+	"specular": [0.774597, 0.774597, 0.774597, 1.0],
+	"shininess": 0.6 * 128.0
+}
+
+material = Material(**gold)
 
 for shape in shapeList:
 	name = shape.getShapeName()
@@ -71,14 +88,14 @@ for shape in shapeList:
 
 	if(name == "ShortBox"):
 		shape.setColor(0.5,0.5,0.5,0)
-		shape.setMaterial(goldMaterial)
+		shape.setMaterial(material)
 	elif(name == "TallBox"):
 		shape.setColor(0.5,0.5,0.5,0)
 	elif(name ==  "Floor"):
 		shape.setColor(0.9,0.9,0.9,0)
 	elif(name == "Ceiling"):
 		shape.setColor(0.9,0.9,0.9,0)
-		shape.setMaterial(goldMaterial)
+		shape.setMaterial(material)
 	elif(name == "LeftWall"):
 		shape.setColor(1,0,0,0)
 	elif(name == "RightWall"):
@@ -87,6 +104,20 @@ for shape in shapeList:
 		shape.setColor(1,1,1,0)
 
 	mainScene.addShape(name, shape)
+
+dicLight = {
+	"lightName": "Directional Light",
+	"lightNum": 0,
+	"ambient": [0.2, 0.2, 0.2, 1],
+	"diffuse": [0.5, 0.5, 0.5, 1],
+	"specular": [1.0, 1.0, 1.0, 1],
+	"direction": [0,0, 1],
+}
+
+light1 = DirectionalLight(**dicLight)
+mainScene.addLight(light1)
+mainScene.lightsON()
+
 
 # for shape in shapeList:
 	

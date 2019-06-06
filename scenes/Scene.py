@@ -10,6 +10,8 @@ from utils import Vec3d, Mat3d
 from cameras import Camera
 from drawers import Drawer, DrawStyle
 
+from lights import Light
+
 class Space:
     LOCAL = 0
     SCENE = 1
@@ -26,7 +28,16 @@ class Scene:
         self.__shapeListSS = {}    # shapes in their scene space
 
         self.__drawStyle = DrawStyle.SMOOTH
-                  
+
+        self.__lights = []
+        self.__lightsStatus = False
+
+    def addLight(self, light):
+        self.__lights.append(light)
+
+    def lightsON(self, status=True):
+        self.__lightsStatus = status
+
     def addShape(self, shapeName, shape):
         self.__shapeListLS.update({shapeName : shape.clone()})
 
@@ -120,14 +131,24 @@ class Scene:
             i.setDrawStyle(self.__drawStyle)
             i = self.__activeCam.view(i)
             i.draw()
-        
-        glLightfv(GL_LIGHT0, GL_AMBIENT, [0.2,0.2,0.2,1])
-        glLightfv(GL_LIGHT0, GL_DIFFUSE, [0.2,0.5,0.5,1])
-        glLightfv(GL_LIGHT0, GL_POSITION, [1,1,1,1])
-        glLightfv(GL_LIGHT0, GL_SPECULAR, [1,1,1,1])
 
-        glEnable(GL_LIGHTING)
-        glEnable(GL_LIGHT0)
+      
+        Light.lightsON(self.__lightsStatus)
+        for light in self.__lights:
+            light = self.__activeCam.view(light)
+            light.draw()
+
+        # glLightfv(GL_LIGHT0, GL_AMBIENT, [0.01,0.01,0.01,1])
+        # glLightfv(GL_LIGHT0, GL_DIFFUSE, [1,1, 1,1])
+        # glLightfv(GL_LIGHT0, GL_POSITION, [0,5,1,1])
+        # glLightfv(GL_LIGHT0, GL_SPECULAR, [0.1,0.1,0.1,1])
+
+        # glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1);
+        # glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0);
+        # glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0);
+
+        # glEnable(GL_LIGHTING)
+        # glEnable(GL_LIGHT0)
 
     
     def __str__(self):
