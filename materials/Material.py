@@ -25,7 +25,7 @@ class Material(object):
         self.__shininess = shininess
         self.__emission = Vec3d(*emission)
     
-    def applyMaterial(self, face = GL_FRONT_AND_BACK):
+    def applyMaterial(self, face = GL_FRONT):
         glMaterialfv(face, GL_AMBIENT, self.__ambient.getVec3d())
         glMaterialfv(face, GL_DIFFUSE, self.__diffuse.getVec3d())
         glMaterialfv(face, GL_SPECULAR, self.__specular.getVec3d())
