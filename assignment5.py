@@ -28,7 +28,7 @@ mainScene = Scene("mainScene")
 
 camera = Camera()
 camera.setCameraFront(0,0,-1)
-camera.setCameraPosition(0,25,100)
+camera.setCameraPosition(0,25,120)
 camera.setWorldUp(0,1,0)
 camera.linearMove(CamMovement.FORWARD, 0.001) # little trick to focus the target point
 camera.updateCamera()

@@ -46,6 +46,13 @@ class SpotLight(Light):
         self.__direction = Vec3d(direction[0], direction[1], direction[2], 0)
         self.__exponent = exponent
 
+    def updatePosition(self, x, y, z):
+        newX = self.__position.getX() + x
+        newY = self.__position.getY() + y
+        newZ = self.__position.getZ() + z
+
+        self.__position = Vec3d(newX, newY, newZ, 1.0)
+
     def transformShape(self, aMath3d):
         # Tricky implementation for now 
         # It places light shape to where the light is located in that moment    

@@ -51,6 +51,11 @@ class Scene:
             if(lightNum == light.getLightNum()):
                 return light.getLightStatus()
 
+    def getLight(self, lightNum):
+        for light in self.__lights:
+            if(lightNum == light.getLightNum()):
+                return light
+
     def addShape(self, shapeName, shape):
         self.__shapeListLS.update({shapeName : shape.clone()})
 

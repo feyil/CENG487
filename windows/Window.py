@@ -22,6 +22,8 @@ class WindowGL:
 
         self.__drawingState = True
 
+        self._proceduralSutffArgs = {}
+
     def setDrawingState(self, state):
         self.__drawingState = state
 
@@ -35,13 +37,23 @@ class WindowGL:
         return self.__scene
 
     def drawScene(self):
+        # Run procedural things
+        self.proceduralStuff()
+
         # Configureable via inheritance
         self.__scene.draw()
 
     def registerEvents(self):
         # Configureable via inheritance
         pass
-       
+
+    # Override and implement
+    def proceduralStuff(self):
+        # I prefer to use seperate thread but I am not sure
+        # you have that lib or not
+        pass
+
+
     # Use above functions to draw   
     # Below embeded configuration setup goes. 
     

@@ -15,6 +15,8 @@ from scenes import Scene, Space
 
 from lights import Light
 
+import math
+
 ESCAPE = '\033'
 
 class Event:
@@ -35,6 +37,9 @@ class MouseControlledWindow(WindowGL):
         self.mouseX = -1
         self.mouseY = -1
 
+        self.moveLight = False
+        self._proceduralSutffArgs["angle"] = 0
+
         self.usage()
     
     def registerEvents(self):
@@ -50,7 +55,7 @@ class MouseControlledWindow(WindowGL):
             self.getScene().subdivide("mainShape", args[0])
         elif(args[0] == 'f'):
             camera = self.getScene().getActiveCamera()
-            camera.setCameraPosition(0,25,100)
+            camera.setCameraPosition(0,25,120)
             camera.setWorldUp(0,1,0)
             camera.linearMove(CamMovement.FORWARD, 0.001) # little trick to focus the target point
             camera.updateCamera()
@@ -69,6 +74,26 @@ class MouseControlledWindow(WindowGL):
             self.controlLight(0)
         elif(args[0] == 'e'):
             self.controlLight(1)
+        elif(args[0] == "a"):
+            light = self.getScene().getLight(Light.LIGHT_NUM[0])
+            if(not self.moveLight):
+                self.moveLight = True
+            else:
+                self.moveLight = False
+    
+            self._proceduralSutffArgs["light"] = light
+            #self._proceduralSutffArgs["angle"] = 0
+
+    def calculateRadian(self, degree):
+        return float(degree) * (math.pi / 180)  
+            
+    # override from WindowGL
+    def proceduralStuff(self):
+        if(self.moveLight):
+            self._proceduralSutffArgs["angle"] += self.calculateRadian(1)
+            degree = self._proceduralSutffArgs["angle"]
+            self._proceduralSutffArgs["light"].updatePosition(math.cos(degree)* 0.5,0,math.sin(degree)* 0.5)
+
 
     def controlLight(self, lightNum):
         scene = self.getScene()
@@ -155,9 +180,10 @@ class MouseControlledWindow(WindowGL):
                 "-> Press 4 to draw WIRES\n" +
                 "-> Press 5 to draw SMOOTH\n" +
                 "-> Press 6 to draw WIRE ON SHADED\n" +
-                "-> Press q to close GL_LIGHTING\n" +
-                "-> Press w to close LIGHT0\n" + 
-                "-> Press e to close LIGHT1\n")  
+                "-> Press q to on/off GL_LIGHTING\n" +
+                "-> Press w to on/off LIGHT0\n" + 
+                "-> Press e to on/off LIGHT1\n" +
+                "-> Press a to start/stop procedural movement of light")  
 
 
     def __str__(self):
