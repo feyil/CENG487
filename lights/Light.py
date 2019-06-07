@@ -49,8 +49,11 @@ class Light(object):
     
     def lightON(self, status=True):
         self._lightStatus = status
+        
+        if(not status):
+                glDisable(self._lightNum)
     
-    def getlightStatus(self):
+    def getLightStatus(self):
         return self._lightStatus
 
     def enableLight(self):

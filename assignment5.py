@@ -86,30 +86,33 @@ for shape in shapeList:
 
 	mainScene.addShape(name, shape)
 
-dicLight = {
-	"lightName": "Directional Light",
+spotLight1 = {
+	"lightName": "INSIDE_SPOT",
 	"lightNum": 0,
 	"ambient": [0.5, 0.5, 0.5, 1],
 	"diffuse": [1, 1, 1, 1],
 	"specular": [0.3, 0.3, 0.3, 1],
 	"position": [0,48, 0],
+	"cutoff": 60,
+	"direction": [0,-1,0,0],
+	"exponent": 0
 }
 
-spotLight = {
-	"lightName": "SpotLight",
+spotLight2 = {
+	"lightName": "OUTSIDE_SPOT",
 	"lightNum": 1,
 	"ambient": [0.5, 0.5, 0.5, 1],
 	"diffuse": [1, 1, 1, 1],
 	"specular": [0.3, 0.3, 0.3, 1],
-	"position": [-10, 10, 20],
-	"cutoff": 45,
-	"direction": [0,2,-1,0],
-	"exponent": 10
+	"position": [0, 25, 30],
+	"cutoff": 30,
+	"direction": [0,0, -1,0],
+	"exponent": 0
 }
 
 
-light1 = PointLight(**dicLight)
-light2 = SpotLight(**spotLight)
+light1 = SpotLight(**spotLight1)
+light2 = SpotLight(**spotLight2)
 mainScene.addLight(light1)
 mainScene.addLight(light2)
 mainScene.lightsON()

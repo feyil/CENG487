@@ -13,6 +13,8 @@ from cameras import Camera,CamMovement
 from drawers import Drawer, DrawStyle
 from scenes import Scene, Space
 
+from lights import Light
+
 ESCAPE = '\033'
 
 class Event:
@@ -22,6 +24,7 @@ class Event:
 		self.button = -1
 		self.state = -1
 		self.altPressed = False
+
 
 class MouseControlledWindow(WindowGL):
 
@@ -57,6 +60,23 @@ class MouseControlledWindow(WindowGL):
             self.getScene().setDrawStyle(DrawStyle.SMOOTH)
         elif(args[0] == '6'):
             self.getScene().setDrawStyle(DrawStyle.WIRE_ON_SHADED)
+        elif(args[0] == 'q'):
+            if(self.getScene().getLightsStatus()):
+                self.getScene().lightsON(False)
+            else:
+                self.getScene().lightsON(True)
+        elif(args[0] == 'w'):
+            self.controlLight(0)
+        elif(args[0] == 'e'):
+            self.controlLight(1)
+
+    def controlLight(self, lightNum):
+        scene = self.getScene()
+        if(scene.getLightStatus(Light.LIGHT_NUM[lightNum])):
+            scene.lightON(Light.LIGHT_NUM[lightNum], False)
+        else:
+            scene.lightON(Light.LIGHT_NUM[lightNum], True)
+          
     
     def specialKeyPressed(self, *args):
         scene = self.getScene()
@@ -134,7 +154,10 @@ class MouseControlledWindow(WindowGL):
                 "-> Press f key to reset camera position\n" +
                 "-> Press 4 to draw WIRES\n" +
                 "-> Press 5 to draw SMOOTH\n" +
-                "-> Press 6 to draw WIRE ON SHADED")  
+                "-> Press 6 to draw WIRE ON SHADED\n" +
+                "-> Press q to close GL_LIGHTING\n" +
+                "-> Press w to close LIGHT0\n" + 
+                "-> Press e to close LIGHT1\n")  
 
 
     def __str__(self):

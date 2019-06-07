@@ -38,6 +38,19 @@ class Scene:
     def lightsON(self, status=True):
         self.__lightsStatus = status
 
+    def lightON(self, lightNum, status):
+        for light in self.__lights:
+            if(lightNum == light.getLightNum()):
+                light.lightON(status)
+    
+    def getLightsStatus(self):
+        return self.__lightsStatus
+
+    def getLightStatus(self, lightNum):
+        for light in self.__lights:
+            if(lightNum == light.getLightNum()):
+                return light.getLightStatus()
+
     def addShape(self, shapeName, shape):
         self.__shapeListLS.update({shapeName : shape.clone()})
 
@@ -132,25 +145,12 @@ class Scene:
             i = self.__activeCam.view(i)
             i.draw()
 
-      
         Light.lightsON(self.__lightsStatus)
         for light in self.__lights:
-            light = self.__activeCam.view(light)
-            light.draw()
+            if(light.getLightStatus()):
+                light = self.__activeCam.view(light)
+                light.draw()
 
-        # glLightfv(GL_LIGHT0, GL_AMBIENT, [0.01,0.01,0.01,1])
-        # glLightfv(GL_LIGHT0, GL_DIFFUSE, [1,1, 1,1])
-        # glLightfv(GL_LIGHT0, GL_POSITION, [0,5,1,1])
-        # glLightfv(GL_LIGHT0, GL_SPECULAR, [0.1,0.1,0.1,1])
-
-        # glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1);
-        # glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0);
-        # glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0);
-
-        # glEnable(GL_LIGHTING)
-        # glEnable(GL_LIGHT0)
-
-    
     def __str__(self):
         return "Scene"
 
