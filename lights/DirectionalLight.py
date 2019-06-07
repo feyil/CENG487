@@ -1,3 +1,8 @@
+# CENG 487 Assignment5 by
+# Furkan Emre Yilmaz
+# StudentId: 230201057
+# June 2019
+
 from OpenGL.GL import *
 
 from Light import Light

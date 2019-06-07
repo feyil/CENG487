@@ -1,3 +1,7 @@
+# CENG 487 Assignment5 by
+# Furkan Emre Yilmaz
+# StudentId: 230201057
+# June 2019
 
 from OpenGL.GL import *
 
@@ -49,7 +53,7 @@ class Light(object):
     
     def lightON(self, status=True):
         self._lightStatus = status
-        
+
         if(not status):
                 glDisable(self._lightNum)
     
