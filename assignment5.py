@@ -95,19 +95,22 @@ dicLight = {
 	"position": [0,48, 0],
 }
 
-dicLight2 = {
-	"lightName": "Directional Light",
+spotLight = {
+	"lightName": "SpotLight",
 	"lightNum": 1,
 	"ambient": [0.5, 0.5, 0.5, 1],
 	"diffuse": [1, 1, 1, 1],
 	"specular": [0.3, 0.3, 0.3, 1],
-	"position": [0, 20, 30],
+	"position": [-10, 10, 20],
+	"cutoff": 45,
+	"direction": [0,2,-1,0],
+	"exponent": 10
 }
 
 
 light1 = PointLight(**dicLight)
-light2 = PointLight(**dicLight2)
-mainScene.addLight(light1)
+light2 = SpotLight(**spotLight)
+#mainScene.addLight(light1)
 mainScene.addLight(light2)
 mainScene.lightsON()
 
