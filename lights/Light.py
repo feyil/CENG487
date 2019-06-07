@@ -50,8 +50,12 @@ class Light(object):
     def lightON(self, status=True):
         self._lightStatus = status
     
-    def lightStatus(self):
+    def getlightStatus(self):
         return self._lightStatus
+
+    def enableLight(self):
+        if(self._lightStatus):
+            glEnable(self._lightNum)
 
     @staticmethod
     def lightsON(logic=True):

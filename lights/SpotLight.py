@@ -102,7 +102,7 @@ class SpotLight(Light):
         glLightfv(light, GL_SPOT_CUTOFF, self.__cutoff)
         glLightfv(light, GL_SPOT_DIRECTION, self.__direction.getVec3d())
         glLightfv(light, GL_SPOT_EXPONENT, self.__exponent)
-
-        glEnable(self._lightNum)
+    
+        self.enableLight()
 
     

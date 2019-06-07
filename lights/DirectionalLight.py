@@ -38,4 +38,4 @@ class DirectionalLight(Light):
         glLightfv(light, GL_SPECULAR, self._specular.getVec3d())
         glLightfv(light, GL_POSITION, self.__direction.getVec3d())
 
-        glEnable(self._lightNum)
+        self.enableLight()

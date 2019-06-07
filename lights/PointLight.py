@@ -84,4 +84,4 @@ class PointLight(Light):
         glLightf(light, GL_LINEAR_ATTENUATION, self.__atLinear)
         glLightf(light, GL_QUADRATIC_ATTENUATION, self.__atQuadratic)
 
-        glEnable(self._lightNum)
+        self.enableLight()
