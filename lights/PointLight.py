@@ -79,4 +79,9 @@ class PointLight(Light):
         glLightfv(light, GL_SPECULAR, self._specular.getVec3d())
         glLightfv(light, GL_POSITION, self.__position.getVec3d())
 
+        # attenuation related
+        glLightf(light, GL_CONSTANT_ATTENUATION, self.__atConstant)
+        glLightf(light, GL_LINEAR_ATTENUATION, self.__atLinear)
+        glLightf(light, GL_QUADRATIC_ATTENUATION, self.__atQuadratic)
+
         glEnable(self._lightNum)

@@ -110,7 +110,7 @@ spotLight = {
 
 light1 = PointLight(**dicLight)
 light2 = SpotLight(**spotLight)
-#mainScene.addLight(light1)
+mainScene.addLight(light1)
 mainScene.addLight(light2)
 mainScene.lightsON()
 
