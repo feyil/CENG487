@@ -8,6 +8,7 @@ from OpenGL.GLUT import *
 
 from OpenGL.GLU import *
 import sys
+from PIL import Image
 
 class WindowGL:
 
@@ -23,6 +24,8 @@ class WindowGL:
         self.__drawingState = True
 
         self._proceduralSutffArgs = {}
+
+        self.plane_texture = None
 
     def setDrawingState(self, state):
         self.__drawingState = state
@@ -60,6 +63,29 @@ class WindowGL:
     def run(self):
         self.__initializeWindow()
         self.__window = glutCreateWindow(self.__windowName)
+
+        plane_texture = glGenTextures(1)
+        self.plane_texture = plane_texture
+        glBindTexture(GL_TEXTURE_2D, plane_texture)
+            # texture wrapping params
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
+            # texture filtering params
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 800, 600, 0, GL_RGBA, GL_UNSIGNED_BYTE, None)
+        glBindTexture(GL_TEXTURE_2D, 0)
+
+        depth_buff = glGenRenderbuffers(1)
+        glBindRenderbuffer(GL_RENDERBUFFER, depth_buff)
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 800, 600)
+
+        FBO = glGenFramebuffers(1)
+        glBindFramebuffer(GL_FRAMEBUFFER, FBO)
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, plane_texture, 0)
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depth_buff)
+        glBindFramebuffer(GL_FRAMEBUFFER, 0)
+
 
         # Register needed event handlers
         self.registerEvents()
@@ -117,18 +143,50 @@ class WindowGL:
     
     def __drawGLScene(self):
         if(self.getDrawingState()):
+            glBindFramebuffer(GL_FRAMEBUFFER,1)
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        
+            # frame buffer lab end
+            self.drawScene()
+        # Capture image from the OpenGL buffer
+            buffer = ( GLubyte * (3*800*600) )(0)
+            glReadPixels(0, 0, 800, 600, GL_RGB, GL_UNSIGNED_BYTE, buffer)
+
+            # Use PIL to convert raw RGB buffer and flip the right way up
+            image = Image.frombytes(mode="RGB", size=(800, 600), data=buffer)     
+            image = image.transpose(Image.FLIP_TOP_BOTTOM)
+
+            # Save image to disk
+            image.save('jpap.png')
+         
+
+            glBindFramebuffer(GL_FRAMEBUFFER,0)
+
             # Clear the screen and the depth buffer
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
             glLoadIdentity()
             # End
 
-            # Draw scene
-            self.drawScene()
-            # End
+            # # Draw scene
+            #self.drawScene()
+            # # End
+
+            #frame buffer lab
+         
+            
+
+            
+
+            #self.drawScene()
+          
+            
+
 
             # Swap buffer
             glutSwapBuffers()
             # End
+
+            exit()
         else:
             glLoadIdentity()
             glutSwapBuffers()
