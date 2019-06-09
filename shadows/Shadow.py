@@ -17,6 +17,7 @@ class Shadow(object):
 
         # reference to Camera object, we can obtain lookAt
         self.__lightView = None
+        self.__lightNum = None
 
         # to remember
         self.__activeCamName = None
@@ -61,7 +62,9 @@ class Shadow(object):
         glReadBuffer(GL_NONE)
         glBindFramebuffer(GL_FRAMEBUFFER, 0)  
 
-    def createLightView(self, lightPos, directionFront, upVector):
+    def createLightView(self, lightNum, lightPos, directionFront, upVector):
+        self.__lightNum = lightNum
+
         cam = Camera()
         cam.setCameraFront(*directionFront)
         cam.setCameraPosition(*lightPos)
@@ -74,13 +77,23 @@ class Shadow(object):
 
     def updateSceneWithLightView(self, scene):
         if(self.__lightView != None):
+            # scene.lightsON(False)
+            # scene.lightON(self.__lightNum, False)
+
             self.__activeCamName = scene.getActiveCameraName()
 
-            scene.addCamera(self, "lightView", self.__lightView)
+            scene.addCamera("lightView", self.__lightView)
             scene.selectCamera("lightView")
         else:
           #  print("Light View None")
           pass
+
+    def recoverSceneView(self, scene):
+        if(self.__activeCamName != None):
+            scene.selectCamera(self.__activeCamName)
+            # scene.lightON(self.__lightNum, True)
+            # scene.lightsON(True)
+            
 
     def renderDepthMap(self, scene):
         #glViewport(0, 0, width, height)
@@ -91,11 +104,10 @@ class Shadow(object):
         self.updateSceneWithLightView(scene)
         scene.draw()
 
+        #self.recoverSceneView(scene)
         glBindFramebuffer(GL_FRAMEBUFFER, 0)
 
-        # Recover scene view
-        if(self.__activeCamName != None):
-            scene.selectCamera(self.__activeCamName)
+        
 
         return self.__depthMapTexture
     

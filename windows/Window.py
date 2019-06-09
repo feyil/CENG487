@@ -8,7 +8,7 @@ from OpenGL.GLUT import *
 
 from OpenGL.GLU import *
 import sys
-from PIL import Image
+# from PIL import Image
 
 import numpy as np
 
@@ -145,12 +145,12 @@ class WindowGL:
 
             shadow.bindFBO(False)
 
-            # Use PIL to convert raw RGB buffer and flip the right way up
-            image = Image.frombytes(mode="L", size=(800, 600), data=depth_data)     
-            image = image.transpose(Image.FLIP_TOP_BOTTOM)
+            # # Use PIL to convert raw RGB buffer and flip the right way up
+            # image = Image.frombytes(mode="L", size=(800, 600), data=depth_data)     
+            # image = image.transpose(Image.FLIP_TOP_BOTTOM)
 
-            # Save image to disk
-            image.save('jpap.png')
+            # # Save image to disk
+            # image.save('jpap.png')
          
             # Clear the screen and the depth buffer
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)

@@ -101,6 +101,8 @@ spotLight1 = {
 	"exponent": 0
 }
 
+shadow.createLightView(Light.LIGHT_NUM[0], [0,48,0], [0,-1,0], [0,0,1])
+
 spotLight2 = {
 	"lightName": "OUTSIDE_SPOT",
 	"lightNum": 1,

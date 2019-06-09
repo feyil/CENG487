@@ -61,7 +61,7 @@ class SpotLight(Light):
     def transformShape(self, aMath3d):
         # Tricky implementation for now 
         # It places light shape to where the light is located in that moment    
-        self.placeRepresentativeShape(aMath3d)
+        #self.placeRepresentativeShape(aMath3d)
 
         self.__position = aMath3d.multiplyByVec3d(self.__position)
         self.__direction = aMath3d.multiplyByVec3d(self.__direction)
