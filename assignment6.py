@@ -14,15 +14,18 @@ from scenes import *
 from subdividers import *
 from materials import *
 from lights import *
+from shadows import *
 
 # input checking
 if(len(sys.argv) != 2):
 	print("\nPlease provide .obj file:\n  >python assignment4.py *.obj\n")
 	exit()
 
+
 # Create a Scene which has two camera one of them active view
 # also has three shape in it.
 mainScene = Scene("mainScene") 
+shadow = Shadow()
 
 # ------ mainCamera --------
 
@@ -143,6 +146,7 @@ def main():
 	mainWindow = MouseControlledWindow("App", 800, 600)
 	# ---------- set mainScene as the window display source
 	mainWindow.setScene(mainScene)
+	mainWindow.setShadow(shadow)
 	# --------------- end --------------------------
 
 	# ----------- make some arrangement to fit the screen ------

@@ -9,8 +9,8 @@ from scenes import Scene
 class Shadow(object):
 
     def __init__(self):
-        self.__depthMapFBO = self.createFrameBufferObject()      
-        self.__depthMapTexture = self.create2DTexture()
+        self.__depthMapFBO = None      
+        self.__depthMapTexture = None
  
         self.__bufferWidth = None
         self.__bufferHeight = None
@@ -73,13 +73,14 @@ class Shadow(object):
         return self.__lightView
 
     def updateSceneWithLightView(self, scene):
-        self.__activeCamName = scene.getActiveCameraName()
+        if(self.__lightView != None):
+            self.__activeCamName = scene.getActiveCameraName()
 
-        scene.addCamera(self, "lightView", self.__lightView)
-        scene.selectCamera("lightView")
-
-    def recoverScene(self, scene):
-        pass
+            scene.addCamera(self, "lightView", self.__lightView)
+            scene.selectCamera("lightView")
+        else:
+          #  print("Light View None")
+          pass
 
     def renderDepthMap(self, scene):
         #glViewport(0, 0, width, height)
@@ -93,6 +94,22 @@ class Shadow(object):
         glBindFramebuffer(GL_FRAMEBUFFER, 0)
 
         # Recover scene view
-        scene.selectCamera(self.__activeCamName)
+        if(self.__activeCamName != None):
+            scene.selectCamera(self.__activeCamName)
 
         return self.__depthMapTexture
+    
+    def bindFBO(self, logic=True):
+        if(logic):
+            glBindFramebuffer(GL_FRAMEBUFFER, self.__depthMapFBO)
+        else:
+            glBindFramebuffer(GL_FRAMEBUFFER, 0)
+
+    def initializeShadowComponents(self):
+        self.__depthMapFBO = self.createFrameBufferObject()
+        
+        self.__depthMapTexture = self.create2DTexture()
+        self.configureTexture()
+
+        self.attachFrameBufferDepthBuffer()
+        
