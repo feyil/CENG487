@@ -23,6 +23,7 @@ class Scene:
 
         self.__cameraList = {}
         self.__activeCam = 0
+        self.__activeCamName = 0
 
         self.__shapeListLS = {}    # shapes in their local space
         self.__shapeListSS = {}    # shapes in their scene space
@@ -125,10 +126,15 @@ class Scene:
     def selectCamera(self, cameraName):
         # return selected camera
         self.__activeCam = self.__cameraList.get(cameraName)
+        self.__activeCamName = cameraName
         return  self.__activeCam
 
     def getActiveCamera(self):
         return self.__activeCam
+
+    def getActiveCameraName(self):
+        return self.__activeCamName
+
 
     def removeCamera(self, cameraName):
         self.__cameraList.pop(cameraName)
