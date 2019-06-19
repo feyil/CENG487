@@ -120,3 +120,6 @@ Rotation of selected shape
 ```
 
 ![alt text](https://github.com/feyil/CENG487/blob/master/screenshots/asgn2.png "asgn2")
+
+
+***Note: I always open for new ideas suggestion and further discussions. If you have a word to say please dont hesitate to share with me***
