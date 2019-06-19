@@ -7,7 +7,7 @@
 
 I have tagged each version of my assignment with git tags to access them with **git checkout** command.
 
-I have five tags names as:
+I have five tags named as:
 * asgn2
 * asgn3
 * asgn4
@@ -122,4 +122,4 @@ Rotation of selected shape
 ![alt text](https://github.com/feyil/CENG487/blob/master/screenshots/asgn2.png "asgn2")
 
 
-***Note: I always open for new ideas, suggestions and further discussions. If you have a word to say please dont hesitate to share with me***
+***Note: I always open for new ideas, suggestions and further discussions. If you have a word to say please dont hesitate to share with me :)***
