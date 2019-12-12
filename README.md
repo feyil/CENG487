@@ -4,6 +4,15 @@
 
 * [CENG487 Course Website](http://ceng.iyte.edu.tr/courses/ceng-487/)
 
+Environment setup 
+
+```shell
+$ sudo apt-get install python-dev   # for python2.x installs
+$ mkvirtualenv graphics -p python2.7
+$ workon graphics
+$ pip install -r requirement.txt
+```
+
 
 I have tagged each version of my assignment with git tags to access them with **git checkout** command.
 
